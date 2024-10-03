@@ -155,4 +155,5 @@ a:hover {
   .contact-info li:not(:last-child)::after {
     display: none;
   }
+  
 }
