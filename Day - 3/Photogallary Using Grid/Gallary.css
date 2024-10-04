@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Satisfy", cursive;
+  font-weight: 700;
+}
+
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallary-header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 5rem;
+  color: transparent;
+  background-image: linear-gradient(90deg, #ff6a00, #ee0979, #ff6a00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-align: center;
+  margin: 4rem;
+  margin-bottom: 0;
+}
+
+/* .gallery {
+  display: flex;
+  margin: 4rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+} */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 4rem 8rem;
+  justify-items: center;
+}
+
+.photo-item {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  /* for the flexbox -> width = 25%*/
+  /* width: 25%; */ 
+  height: 23rem;
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 1);
+}
+
+.photo-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.5s ease, transform 0.7s ease;
+}
+
+.photo-item:hover img {
+  transform: scale(1.05);
+  filter: grayscale(0%);
+}
+
+.photo-item:hover::before {
+  opacity: 1;
+}
+
+.photo-text {
+  position: absolute;
+  bottom: 5%;
+  left: 20%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+}
+
+.photo-item:hover .photo-text {
+  opacity: 1;
+}
+
+@media screen and (max-width: 398px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  .photo-item {
+    width: 3%;
+    height: 5rem;
+  }
+
+  .gallery {
+    margin: 1rem;
+    /* background-color: red; */
+    gap: 1rem;
+  }
+}
