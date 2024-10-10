@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Store</title>
+    <link rel="stylesheet" href="../dist/output.css" />
+  </head>
+  <body
+    class="flex flex-col bg-amber-50 text-amber-950 items-center justify-start h-screen"
+  >
+    <header class="shadow-md py-4 px-10 w-full sticky top-0 bg-amber-50">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <nav class="hidden md:flex space-x-6 font-semibold">
+          <a href="#" class="hover:text-blue-500">Books</a>
+          <a href="#" class="hover:text-blue-500">Wishlist</a>
+          <a href="#" class="hover:text-blue-500">Contact</a>
+        </nav>
+
+        <div class="text-2xl font-bold">
+          <a href="#" class="hover:text-blue-500">Bookstore</a>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <a href="#" class="relative mr-10 px-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="w-6 h-6 hover:text-blue-500"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l1.24-4.88M7 13L5.56 7.12M7 13L6.4 11M17 13l1.6-4.88M17 13h3M3 3h18M13 16v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h4z"
+              />
+            </svg>
+            <span
+              id="cart-count"
+              class="absolute top-[-5px] right-0 bg-amber-950 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+              >0</span
+            >
+          </a>
+
+          <button id="menu-toggle" class="block md:hidden focus:outline-none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <nav id="mobile-menu" class="md:hidden px-4 py-2 hidden">
+        <a href="#" class="block hover:text-blue-500 py-2">Books</a>
+        <a href="#" class="block hover:text-blue-500 py-2">Wishlist</a>
+        <a href="#" class="block hover:text-blue-500 py-2">Contact</a>
+      </nav>
+    </header>
+
+    <main class="container my-6 px-10">
+      <h2 class="text-5xl font-semibold my-6 py-4">Featured Books</h2>
+      <div
+        id="book-list"
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 pb-10"
+      >
+        <!-- for book cards rendering -->
+      </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
