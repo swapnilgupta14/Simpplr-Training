@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Store</title>
     <link rel="stylesheet" href="../dist/output.css" />
+
   </head>
   <body
-    class="flex flex-col bg-amber-50 text-amber-950 items-center justify-start h-screen"
+    id="body" class="flex flex-col bg-amber-50 text-amber-950 items-center justify-start h-screen"
   >
-    <header class="shadow-md py-4 px-10 w-full sticky top-0 bg-amber-50">
+    <header class="shadow-md py-4 px-10 w-full sticky top-0 bg-amber-50 z-40">
       <div class="container mx-auto px-4 flex justify-between items-center">
         <nav class="hidden md:flex space-x-6 font-semibold">
-          <a href="#" class="hover:text-blue-500">Books</a>
-          <a href="#" class="hover:text-blue-500">Wishlist</a>
-          <a href="#" class="hover:text-blue-500">Contact</a>
+          <a href="#" class="hover:text-amber">Books</a>
+          <a href="#" class="hover:text-amber">Wishlist</a>
+          <a href="#" class="hover:text-amber">Contact</a>
         </nav>
 
-        <div class="text-2xl font-bold">
-          <a href="#" class="hover:text-blue-500">Bookstore</a>
+        <div class="text-5xl font-bold">
+          <a class="hover:text-amber font-[`Satisfy`] satisfy-regular">The Book Nook</a>
         </div>
 
-        <div class="flex items-center space-x-4">
-          <a href="#" class="relative mr-10 px-3">
+        <div class="flex items-center space-x-4 hover:cursor-pointer">
+          <div href="#" id="cart-click" class="relative mr-10 px-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              class="w-6 h-6 hover:text-blue-500"
+              class="w-6 h-6 hover:text-amber"
             >
               <path
                 stroke-linecap="round"
@@ -42,7 +41,7 @@
               class="absolute top-[-5px] right-0 bg-amber-950 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
               >0</span
             >
-          </a>
+          </div>
 
           <button id="menu-toggle" class="block md:hidden focus:outline-none">
             <svg
@@ -64,14 +63,14 @@
       </div>
 
       <nav id="mobile-menu" class="md:hidden px-4 py-2 hidden">
-        <a href="#" class="block hover:text-blue-500 py-2">Books</a>
-        <a href="#" class="block hover:text-blue-500 py-2">Wishlist</a>
-        <a href="#" class="block hover:text-blue-500 py-2">Contact</a>
+        <a href="#" class="block hover:text-amber py-2">Books</a>
+        <a href="#" class="block hover:text-amber py-2">Wishlist</a>
+        <a href="#" class="block hover:text-amber py-2">Contact</a>
       </nav>
     </header>
 
     <main class="container my-6 px-10">
-      <h2 class="text-5xl font-semibold my-6 py-4">Featured Books</h2>
+      <h2 class="text-3xl font-bold my-6 py-4 border-b-2 border-amber-50">Featured Books</h2>
       <div
         id="book-list"
         class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 pb-10"
@@ -80,7 +79,27 @@
       </div>
     </main>
 
+    <div
+      id="cart-popup"
+      class="hidden fixed bottom-0 right-0 bg-white shadow-lg rounded-lg p-6 z-30 h-[78vh] w-[30vw]"
+    >
+      <div
+        id="cart-items"
+        class="space-y-2 overflow-y-scroll max-h-[90%]"
+      ></div>
+      <div class=" items-center  flex justify-between gap-10 mt-5">
+        <p class="font-bold text-xs">
+          Total Price: </br> ₹<span id="total-price" class="font-bold text-xl"
+            >0.00</span
+          >
+        </p>
+        <button class="bg-amber-950 hover:bg-amber-900 text-white font-semibold py-2 px-4 rounded flex-grow text-sm">Checkout</button>
+      </div>
+    </div>
+
     <script src="data.js"></script>
     <script src="script.js"></script>
+    <script src="cart.js"></script>
   </body>
 </html>
+
