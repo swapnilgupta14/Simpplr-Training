@@ -30,8 +30,25 @@ const calculateTotalRevenue = (availableFlights) => {
 
 
 // 5
+const predicate1 = flight => flight.to === 'Delhi';
+const predicate2 = flight => flight.price <= 500;
+const combinedFilters = [predicate1, predicate2];
+// const arr = [1, 2, false, 5, 6];
+// console.log(arr.every(item => item));
+const composeFilters = (predicateArray) => {
+    return (flight) => {
+        return predicateArray.every(predicate => predicate(flight));
+    };
+};
+const filteredFlights = filterFlights(availableFlights, composeFilters(combinedFilters));
+console.log(filteredFlights);
+
+
+
+
+// 6
 const findFlightById = (availableFlights, flightNumber) => availableFlights.find(item => item.flightNumber === flightNumber);
-console.log(findFlightById(availableFlights, 'AI103'));
+// console.log(findFlightById(availableFlights, 'AI103'));
 
 
 
