@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Digital Clock</title>
+    <link rel="stylesheet" href="../dist/output.css" />
+  </head>
+  <body
+    class="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 text-white"
+  >
+    <header class="absolute top-0 w-full flex justify-between">
+      <h1 class="text-4xl font-bold satisfy-regular p-10">Digital Tick</h1>
+    </header>
+    <div
+      class="text-center p-8 bg-gray-900 bg-opacity-25 rounded-lg shadow-lg backdrop-blur-md font-bold min-w-[45rem] relative"
+    >
+      <span class="flex justify-center items-center mt-4">
+        <div
+          id="time"
+          class="text-9xl font-bold mx-5 min-w-[32rem] flex justify-start"
+        ></div>
+        <div id="ampm" class="text-5xl"></div>
+      </span>
+
+      <span class="flex justify-center items-center gap-2 m-4">
+        <div id="day" class="text-xl mt-4"></div>
+        <div id="date" class="text-xl mt-4"></div>
+      </span>
+      <div id="timezone" class="text-xl mt-2 opacity-75"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

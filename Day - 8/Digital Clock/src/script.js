@@ -1,11 +1,15 @@
 const updateClock = () => {
   const now = new Date();
+  //   console.log(now);
 
   const timeElement = document.getElementById("time");
   const ampmElement = document.getElementById("ampm");
   const dateElement = document.getElementById("date");
   const dayElement = document.getElementById("day");
   const timezoneElement = document.getElementById("timezone");
+  //   console.log(timeElement);
+  //   console.log(ampmElement);
+  //   console.log(dateElement);
 
   let hours = now.getHours();
   const min = String(now.getMinutes()).padStart(2, "0");
@@ -33,6 +37,7 @@ const updateClock = () => {
   dayElement.textContent = days[now.getDay()];
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  //   console.log(timezone);
   timezoneElement.textContent = `Time zone: ${timezone}`;
 };
 
