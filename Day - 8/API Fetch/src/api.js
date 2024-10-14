@@ -14,11 +14,13 @@ function fetchUsersWithPromise() {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
         // console.log("response: ", response);
+        // console.log("response.ok: ", response.ok);
+        // console.log(response.status);
         let error = response.ok ? false : true;
         if (!error) {
           return response.json();
         } else {
-          reject("Rejection: You Failed ");
+          reject("promise rejected");
         }
       })
       .then((users) => resolve(users))
@@ -41,10 +43,11 @@ const fetchUsersWithAsyncAwait = async () => {
 
 const createUserCard = (user) => {
   return `
-      <div class="bg-white p-6 rounded-full shadow-lg flex flex-col items-center">
-          <h2 class="text-lg font-bold text-gray-800">${user.name}</h2>
-          <p class="text-sm text-gray-500">${user.email}</p>
-          <p class="text-sm text-gray-500">${user.company.name}</p>
+      <div class="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
+        <div class="w-16 h-16 bg-gray-300 rounded-full mb-4"></div>
+        <h2 class="text-lg font-bold text-gray-800">${user.name}</h2>
+        <p class="text-sm text-gray-500">${user.email}</p>
+        <p class="text-sm text-gray-500">${user.company.name}</p>
       </div>
   `;
 };
@@ -52,10 +55,10 @@ const createUserCard = (user) => {
 function displayUsers(users) {
   const userGrid = document.getElementById("user-grid");
   userGrid.innerHTML = users.map((user) => createUserCard(user)).join("");
-  console.log(
-    "Users displayed: ",
-    users.map((user) => createUserCard(user)).join("")
-  );
+  // console.log(
+  //   "Users displayed: ",
+  //   users.map((user) => createUserCard(user)).join("")
+  // );
 }
 
 fetchUsersWithCallback(function (users) {
