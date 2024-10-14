@@ -5,15 +5,32 @@ cartIcon.addEventListener("click", () => {
 });
 
 const cartPopup = document.getElementById("cart-popup");
+
 const cartItemsAddedContainer = document.getElementById("cart-items");
 const totalPriceElement = document.getElementById("total-price");
+
 const cartCountElement = document.getElementById("cart-count");
 
 let cartItemsAdded = JSON.parse(localStorage.getItem("cartItems")) || [];
 
+const addItemToCart = (item) => {
+  cartItemsAdded.push(item);
+  localStorage.setItem("cartItems", JSON.stringify(cartItemsAdded));
+
+  displayCartItemsAdded();
+};
+
+const removeItem = (event) => {
+  let newCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const index = event.target.dataset.index;
+  newCartItems.splice(index, 1);
+  localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+  displayCartItemsAdded();
+};
+
 const displayCartItemsAdded = () => {
   let newItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  console.log("rendered");
+  // console.log("rendered");
   cartItemsAdded = newItems;
   cartItemsAddedContainer.innerHTML = "";
   let totalPrice = 0;
@@ -37,15 +54,11 @@ const displayCartItemsAdded = () => {
 
     cartItemDiv.innerHTML = `
       <div class="flex space-x-4">
-        <img src="${item.image}" alt="${
-      item.title
-    }" class="w-16 h-24 object-cover rounded-md">
+        <img src="${item.image}" alt="${item.title}" class="w-16 h-24 object-cover rounded-md">
         <div>
           <h3 class="text-lg font-semibold">${item.title}</h3>
           <p class="text-sm text-gray-600">by ${item.author}</p>
-          <p class="text-sm font-bold">₹${(item.price * 90).toFixed(2)} x ${
-      item.quantity
-    }</p>
+          <p class="text-sm font-bold">₹${(item.price * 90).toFixed(2)} x ${item.quantity}</p>
         </div>
       </div>
 
@@ -63,14 +76,13 @@ const displayCartItemsAdded = () => {
     cartItemsAddedContainer.appendChild(cartItemDiv);
   });
 
-  totalPriceElement.textContent = totalPrice.toFixed(2);
-  updateCartCount1();
-
-  // Attach event listeners to remove buttons
-  document.querySelectorAll(".remove-item").forEach((button) => {
+    totalPriceElement.textContent = totalPrice.toFixed(2);
+    updateCartCount1();
+    document.querySelectorAll(".remove-item").forEach((button) => {
     button.addEventListener("click", removeItem);
   });
 };
+
 
 const updateCartCount1 = () => {
   const totalItems = cartItemsAdded.reduce(
@@ -80,20 +92,7 @@ const updateCartCount1 = () => {
   cartCountElement.textContent = totalItems;
 };
 
-const removeItem = (event) => {
-  let newCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  const index = event.target.dataset.index;
-  newCartItems.splice(index, 1);
-  localStorage.setItem("cartItems", JSON.stringify(newCartItems));
-  displayCartItemsAdded();
-};
 
-const addItemToCart = (item) => {
-  cartItemsAdded.push(item);
-  localStorage.setItem("cartItems", JSON.stringify(cartItemsAdded));
-
-  displayCartItemsAdded();
-};
 
 updateCartCount1();
 displayCartItemsAdded();
