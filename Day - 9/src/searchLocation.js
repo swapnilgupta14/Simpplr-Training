@@ -15,13 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const geoLocationElement = document.getElementById("geo-location");
       if (geoLocationElement) {
-        geoLocationElement.textContent = `${ipData?.city}, ${ipData?.region}, ${ipData?.country}`;
+        geoLocationElement.innerHTML = `
+        <div class="font text-start flex flex-col items-center justify-start space-y-1 w-fit">
+            <p class="text-sm font-medium flex justify-start text-gray-800 w-[100%]">${ipData?.city}</p>
+            <p class="text-md text-gray-600 text-start">${ipData?.region}, ${ipData?.country}</p>
+        </div>
+
+    `;
       }
 
       const locationQuery = `${ipData.lat},${ipData.lon}`;
       const weatherData = await getWeather(null, locationQuery);
       displayWeatherInfo(weatherData);
-      fetchWeatherForecast(locationQuery); // Fetch forecast data here
+      fetchWeatherForecast(locationQuery);
     } catch (error) {
       console.error("Error fetching IP weather data:", error);
     }
@@ -69,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
           resultsContainer.classList.add("hidden");
           const weatherData = await getWeather(null, listItem.textContent);
           displayWeatherInfo(weatherData);
-          fetchWeatherForecast(listItem.textContent); // Fetch forecast data here
+          fetchWeatherForecast(listItem.textContent);
         });
         resultsContainer.appendChild(listItem);
       });
@@ -90,36 +96,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const { location, current } = weatherData;
     weatherInfoContainer.innerHTML = `
-      <div id="weatherInfoContainer" class="w-[100%] mx-auto p-8 backdrop-blur-sm border bg-white bg-opacity-50 h-full border-white rounded-2xl shadow-lg text-gray-800">
-      <div>
-        <div>
-          <h1 class="text-xl font-bold text-gray-900 mb-6 text-center">Weather in ${location.name}</h1>
-          <h2 class="text-xl font-semibold text-gray-700 mb-4 text-center">${location.region}, ${location.country}</h2>
-        </div>
+      <div id="weatherInfoContainer" class="w-[100%] mx-auto p-8 flex flex-col justify-start items-center text-gray-700">
+        <div class="flex flex-col justify-between text-center items-center p-10">
+          
+          <div class="p-10">
+            <p class="text-8xl font-semibold">${current.temp_c}°<span class="text-[2rem]">C</span></p>
+            <div class="text-gray-900"> 
+             <div class="p-5 text-2xl font-medium flex items-center justify-center">
+              <img src="${current?.condition?.icon}" alt="${current?.condition?.text}" class="w-10 h-10 ">
+              <span>${current?.condition?.text}</span>
+            </div>
 
-        <div class="flex justify-center items-center mb-6">
-          <img src="${current.condition.icon}" alt="${current.condition.text}" class="w-16 h-16 mr-4" />
-          <p class="text-xl font-medium text-gray-900">${current.condition.text}</p>
-        </div>
-        </div>
 
-        <div class="grid grid-cols-2 gap-6 text-lg">
-          <div>
-            <p class="mb-2"><strong>Temperature:</strong> <span class="text-blue-600">${current.temp_c}°C</span></p>
-            <p><strong>Feels Like:</strong> <span class="text-blue-600">${current.feelslike_c}°C</span></p>
+              <p class="text-md font-normal text-gray-800">Feels Like: <span class="font-semibold">${current.feelslike_c}°C</span></p>
+            </div>
+            <p class="text-2xl font-normal text-gray-200 bg-gray-700 py-3 px-5 rounded-full m-5">${location.name}, ${location.country}</p>
+
           </div>
-          <div>
-            <p class="mb-2"><strong>Humidity:</strong> <span class="text-blue-600">${current.humidity}%</span></p>
-            <p><strong>Wind:</strong> <span class="text-blue-600">${current.wind_kph} kph</span> (${current.wind_dir})</p>
+
+          <div class="grid grid-cols-5 gap-6 text-lg w-[70%] max-w-[80%]">
+            <div class="bg-gray-200 p-4 text-gray-600 rounded-xl flex flex-col items-center text-center">
+              <p class="mb-2"><strong>Humidity: </br> </strong> <span class="text-gray-600">${current.humidity}%</span></p>
+            </div>
+            <div class="bg-gray-200 p-4 text-gray-600 rounded flex flex-col items-center text-center">
+              <p class="mb-2"><strong>Wind: </br> </strong> <span class="text-gray-600">${current.wind_kph} kph</span> (${current.wind_dir})</p>
+            </div>
+            <div class="bg-gray-200 p-4 text-gray-600 rounded flex flex-col items-center text-center">
+              <p class="mb-2"><strong>Pressure: </br> </strong> <span class="text-gray-600">${current.pressure_mb} mb</span></p>
+            </div>
+            <div class="bg-gray-200 p-4 text-gray-600 rounded flex flex-col items-center text-center">
+              <p class="mb-2"><strong>UV Index: </br> </strong> <span class="text-gray-600">${current.uv}</span></p>
+            </div>
+            <div class="bg-gray-200 p-4 text-gray-600 rounded flex flex-col items-center text-center">
+              <p class="mb-2"><strong>Visibility: </br> </strong> <span class="text-gray-600">${current.vis_km} km</span></p>
+            </div>
           </div>
-          <div>
-            <p class="mb-2"><strong>Pressure:</strong> <span class="text-blue-600">${current.pressure_mb} mb</span></p>
-            <p><strong>UV Index:</strong> <span class="text-blue-600">${current.uv}</span></p>
-          </div>
-          <div>
-            <p class="mb-2"><strong>Visibility:</strong> <span class="text-blue-600">${current.vis_km} km</span></p>
-            <p><strong>Gusts:</strong> <span class="text-blue-600">${current.gust_kph} kph</span></p>
-          </div>
+
         </div>
       </div>
     `;
@@ -130,7 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const fetchWeatherForecast = async (query) => {
     const baseURL = "http://api.weatherapi.com/v1/forecast.json";
     try {
-      const response = await fetch(`${baseURL}?key=${API_KEY}&q=${query}&days=7`);
+      const response = await fetch(
+        `${baseURL}?key=${API_KEY}&q=${query}&days=7`
+      );
       const forecastData = await response.json();
       displayForecastInfo(forecastData);
     } catch (error) {
@@ -140,15 +154,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const displayForecastInfo = (forecastData) => {
     const { forecast } = forecastData;
-    const forecastList = forecast.forecastday;
-
-    forecastInfoContainer.innerHTML = ""; 
-
+    const forecastList = forecast.forecastday.slice(1); 
+    const todayForecast = forecastData.forecast.forecastday[0];
+    
+    const currentDate = new Date();
+    const currentTime = currentDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  
+    forecastInfoContainer.innerHTML = "";
+  
+    const topPart = document.createElement("div");
+    topPart.classList.add(
+      "text-center",
+      "mt-8",
+      "p-6",
+      "border-b-2",
+      "border-gray-300",
+    );
+  
+    topPart.innerHTML = `
+      <div class="h-[30vh] flex flex-col justify-center items-center">
+        <h3 class="text-4xl text-gray-800 font-bold">${currentDate.toLocaleDateString('en-US', {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}</h3>
+        <p class="text-lg text-gray-600">${currentDate.toLocaleDateString('en-US', {
+          weekday: "long",
+        })}</p>
+        <p class="text-md text-gray-500 mb-2">Current Time: ${currentTime}</p>
+    
+        <div class="flex gap-8 justify-center mt-4">
+          <div class="flex flex-col items-center">
+            <p class="text-md font-semibold text-gray-700">Max Temp</p>
+            <p class="text-lg text-blue-600">${todayForecast.day.maxtemp_c}°C</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <p class="text-md font-semibold text-gray-700">Min Temp</p>
+            <p class="text-lg text-blue-600">${todayForecast.day.mintemp_c}°C</p>
+          </div>
+        </div>
+  
+        <div class="flex gap-8 justify-center mt-4">
+          <div class="flex flex-col items-center">
+            <p class="text-md font-semibold text-gray-700">Sunrise</p>
+            <p class="text-lg text-yellow-600">${todayForecast.astro.sunrise}</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <p class="text-md font-semibold text-gray-700">Sunset</p>
+            <p class="text-lg text-yellow-600">${todayForecast.astro.sunset}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  
+    forecastInfoContainer.appendChild(topPart);
+  
+    const weeklyForecastHeading = document.createElement("h2");
+    weeklyForecastHeading.classList.add("text-2xl", "font-bold", "text-gray-800", "mt-10", "mb-6", "text-center");
+    weeklyForecastHeading.textContent = "Weekly Forecast";
+    forecastInfoContainer.appendChild(weeklyForecastHeading);
+  
+    const bottomPart = document.createElement("div");
+    bottomPart.classList.add(
+      "grid",
+      "grid-cols-1",
+      "sm:grid-cols-2",
+      "lg:grid-cols-3",
+      "xl:grid-cols-3",
+      "gap-4",
+      "p-4"
+    );
+  
     forecastList.forEach((day) => {
       const forecastCard = document.createElement("div");
       forecastCard.classList.add(
         "bg-white",
-        "bg-opacity-20",
+        "bg-opacity-60",
         "backdrop-blur-sm",
         "border",
         "border-white",
@@ -156,21 +241,27 @@ document.addEventListener("DOMContentLoaded", () => {
         "rounded-lg",
         "shadow-lg",
         "p-4",
-        "text-center"
+        "text-center",
+        "transition-transform",
+        "hover:scale-105"
       );
-
+  
       forecastCard.innerHTML = `
-        <h3 class="text-lg font-bold">${new Date(day.date).toLocaleDateString()}</h3>
+        <p class="text-sm text-gray-600 mb-2">${new Date(day.date).toLocaleDateString('en-US', {
+          weekday: 'long',
+        })}</p>
         <img src="${day.day.condition.icon}" alt="${day.day.condition.text}" class="w-12 h-12 mx-auto mb-2" />
-        <p class="text-gray-700">${day.day.condition.text}</p>
-        <p><strong>Max Temp:</strong> <span class="text-blue-600">${day.day.maxtemp_c}°C</span></p>
-        <p><strong>Min Temp:</strong> <span class="text-blue-600">${day.day.mintemp_c}°C</span></p>
-        <p><strong>Precipitation:</strong> <span class="text-blue-600">${day.day.totalprecip_mm} mm</span></p>
+        <p class="text-gray-700 mb-2">${day.day.condition.text}</p>
+        
       `;
-
-      forecastInfoContainer.appendChild(forecastCard);
+  
+      bottomPart.appendChild(forecastCard);
     });
+  
+    forecastInfoContainer.appendChild(bottomPart);
   };
+  
+  
 
   searchInput.addEventListener(
     "input",
