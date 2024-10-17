@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Satisfy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Protest+Strike&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f3f4f6;
+  color: #333;
+}
+.header {
+  color: #4f46e5;
+}
+.button-primary {
+  background-color: #4f46e5;
+  transition: background-color 0.3s ease;
+}
+.button-primary:hover {
+  background-color: #4338ca;
+}
+.button-secondary {
+  background-color: #22c55e;
+  transition: background-color 0.3s ease;
+}
+.button-secondary:hover {
+  background-color: #16a34a;
+}
+.input-field {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.3s ease;
+}
+.input-field:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+.form-section {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.grid-cols-2 {
+  gap: 1.5rem;
+}

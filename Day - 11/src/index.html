@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flight Booking App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../dist/output.css" />
+  </head>
+  <body class="flex items-center justify-center min-h-[95vh] px-2">
+    <div class="w-full p-4 bg-white rounded-lg shadow-lg">
+      <header class="text-xl font-bold mx-5 mb-10 header">
+        Flight Booking System
+      </header>
+
+      <div class="flex justify-between w-full space-x-8">
+        <div class="flex flex-col w-[40%] bg-white rounded-lg shadow-lg">
+          <section
+            class="w-full mb-6 h-full max-h-[90vh] overflow-y-scroll p-6"
+          >
+            <div class="flex justify-between items-start">
+              <h2 class="text-xl font-semibold mb-6 text-gray-700">
+                Available Flights
+                <p id="totalFlights" class="text-xs text-gray-500">Total Flights: 0</p>
+              </h2>
+
+              <div class="flex items-center space-x-2">
+                <div class="relative inline-block">
+                  <select
+                    id="sortDropdown"
+                    class="bg-white border border-gray-300 rounded-md px-1 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                  >
+                    <option value="">Sort</option>
+                    <option value="priceAsc">Price: L to H</option>
+                    <option value="priceDesc">Price: H to L</option>
+                    <option value="seatsAsc">Seats: L to H</option>
+                    <option value="seatsDesc">Seats: H to L</option>
+                  </select>
+                </div>
+
+                <div class="relative inline-block">
+                  <select
+                    id="filterDropdown"
+                    class="bg-white border border-gray-300 rounded-md px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                  >
+                    <option value="">Filter</option>
+                    <option value="below500">Below Rs500</option>
+                    <option value="below700">Below Rs700</option>
+                    <option value="above700">Above Rs700</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="flightList"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"
+            ></div>
+          </section>
+
+          <!-- <section class="flex justify-between gap-4">
+            <button
+              id="sortFlightsBtn"
+              class="w-full button-primary text-white py-2 px-4 rounded-lg"
+            >
+              Sort by Price
+            </button>
+            <button
+              id="filterFlightsBtn"
+              class="w-full button-secondary text-white py-2 px-4 rounded-lg"
+            >
+              Filter by Price
+            </button>
+          </section> -->
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 flex-1">
+          <section class="form-section">
+            <h2 class="text-xl font-semibold mb-6 text-gray-700">
+              Search Flights
+            </h2>
+            <form id="searchFlightForm" class="space-y-6">
+              <div>
+                <label
+                  for="from"
+                  class="block text-sm font-medium text-gray-700"
+                  >From:</label
+                >
+                <input
+                  type="text"
+                  id="from"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Departure City"
+                />
+              </div>
+              <div>
+                <label for="to" class="block text-sm font-medium text-gray-700"
+                  >To:</label
+                >
+                <input
+                  type="text"
+                  id="to"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Destination City"
+                />
+              </div>
+              <p id="searchResult" class="text-sm text-gray-600 mt-4"></p>
+              <button
+                type="submit"
+                class="w-full button-primary text-white py-2 rounded-lg"
+              >
+                Search Flight
+              </button>
+            </form>
+          </section>
+
+          <section class="form-section">
+            <h2 class="text-xl font-semibold mb-6 text-gray-700">
+              Book a Flight
+            </h2>
+            <form
+              id="bookFlightForm"
+              class="flex flex-col justify-between h-[78%]"
+            >
+              <div>
+                <label
+                  for="flightNumber"
+                  class="block text-sm font-medium text-gray-700"
+                  >Flight Number:</label
+                >
+                <input
+                  type="text"
+                  id="flightNumber"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Enter Flight Number"
+                />
+              </div>
+              <p id="bookResult" class="text-sm text-gray-600 mt-4"></p>
+              <button
+                type="submit"
+                class="w-full button-secondary text-white py-2 rounded-lg"
+              >
+                Book Flight
+              </button>
+            </form>
+          </section>
+
+          <section class="form-section col-span-2">
+            <h2 class="text-xl font-semibold mb-6 text-gray-700">
+              Add New Flight
+            </h2>
+            <form id="addFlightForm" class="grid grid-cols-2 gap-6">
+              <div>
+                <label
+                  for="newFlightNumber"
+                  class="block text-sm font-medium text-gray-700"
+                  >Flight Number:</label
+                >
+                <input
+                  type="text"
+                  id="newFlightNumber"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Flight Number"
+                />
+              </div>
+              <div>
+                <label
+                  for="fromNew"
+                  class="block text-sm font-medium text-gray-700"
+                  >From:</label
+                >
+                <input
+                  type="text"
+                  id="fromNew"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Departure City"
+                />
+              </div>
+              <div>
+                <label
+                  for="toNew"
+                  class="block text-sm font-medium text-gray-700"
+                  >To:</label
+                >
+                <input
+                  type="text"
+                  id="toNew"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Destination City"
+                />
+              </div>
+              <div>
+                <label
+                  for="price"
+                  class="block text-sm font-medium text-gray-700"
+                  >Price:</label
+                >
+                <input
+                  type="number"
+                  id="price"
+                  class="mt-2 input-field block w-full rounded-lg"
+                  placeholder="Price"
+                />
+              </div>
+              <p id="addResult" class="text-sm text-gray-600 mt-4"></p>
+              <button
+                type="submit"
+                class="col-span-2 button-primary text-white py-2 rounded-lg"
+              >
+                Add Flight
+              </button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="./flightBookings.js"></script>
+  </body>
+</html>
