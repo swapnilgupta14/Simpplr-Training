@@ -24,7 +24,7 @@ function f22(x: unknown) {
   let v4: string = x;  // Error: unknown could be any type, so it cannot be assigned to string
   let v5: string[] = x;   //Error
   let v6: {} = x;        // No error - {} accepts any non-null and non-undefined value.
-  let v7: {} | null | undefined = x;  // No error `unknown` can be assigned to {} | null | undefined.
+  let v7: {} | null | undefined = x;  // No error unknown can be assigned to {} | null | undefined.
 }
 
 function f11(x: unknown) {
