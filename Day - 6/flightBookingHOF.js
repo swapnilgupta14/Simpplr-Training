@@ -41,7 +41,7 @@ const composeFilters = (predicateArray) => {
     };
 };
 const filteredFlights = filterFlights(availableFlights, composeFilters(combinedFilters));
-console.log(filteredFlights);
+// console.log(filteredFlights);
 
 
 
