@@ -13,7 +13,12 @@
   <body class="flex items-center justify-center min-h-[95vh] px-2">
     <div class="w-full p-4 bg-white rounded-lg shadow-lg">
       <header class="text-xl font-bold mx-5 mb-10 header">
-        Flight Booking System
+        <div class="relative inline-block">
+          <select id="bookingDropdown" class="px-4 py-2 bg-gray-300 text-gray-800 rounded">
+            <option value="flight">Flight Booking System</option>
+            <option value="train">Train Booking System</option>
+          </select>
+        </div>
       </header>
 
       <div class="flex justify-between w-full space-x-8">
@@ -24,7 +29,9 @@
             <div class="flex justify-between items-start">
               <h2 class="text-xl font-semibold mb-6 text-gray-700">
                 Available Flights
-                <p id="totalFlights" class="text-xs text-gray-500">Total Flights: 0</p>
+                <p id="totalFlights" class="text-xs text-gray-500">
+                  Total Flights: 0
+                </p>
               </h2>
 
               <div class="flex items-center space-x-2">
@@ -217,7 +224,7 @@
         </div>
       </div>
     </div>
-
+    <script src="manageTabs.js"></script>
     <script src="./flightBookings.js"></script>
   </body>
 </html>
