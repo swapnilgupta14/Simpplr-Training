@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="Library.js" defer></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-100 min-h-screen p-8">
+    <div class="w-full max-w-7xl mx-auto">
+      <h1 class="text-4xl font-semibold text-center mb-12">
+        Library Management System
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="bg-white shadow-md rounded-lg p-6">
+          <h2 class="text-2xl font-medium mb-4">Available Books</h2>
+          <ul id="available-books" class="space-y-2"></ul>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-6 col-span-2">
+          <h2 class="text-2xl font-medium mb-4">Borrowed Books by Users</h2>
+          <div id="borrowed-books-section" class="grid grid-cols-1 gap-6"></div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white shadow-md rounded-lg p-6">
+          <h2 class="text-2xl font-medium mb-4">Create User / Member</h2>
+          <input
+            type="text"
+            id="user-name"
+            placeholder="Enter Name"
+            class="w-full mb-2 px-4 py-2 border rounded-md"
+          />
+          <input
+            type="text"
+            id="membership-id"
+            placeholder="Membership ID (Optional)"
+            class="w-full mb-4 px-4 py-2 border rounded-md"
+          />
+          <button
+            id="create-user"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md w-full"
+          >
+            Create User / Member
+          </button>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-6">
+          <h2 class="text-2xl font-medium mb-4">Borrow a Book</h2>
+          <select
+            id="user-select"
+            class="w-full mb-2 px-4 py-2 border rounded-md"
+          ></select>
+
+          <select
+            id="book-select"
+            class="w-full mb-4 px-4 py-2 border rounded-md"
+          ></select>
+          <button
+            id="borrow-book"
+            class="bg-green-500 text-white px-4 py-2 rounded-md w-full"
+          >
+            Borrow Book
+          </button>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg p-6">
+          <h2 class="text-2xl font-medium mb-4">Return a Book</h2>
+          <select
+            id="return-user-select"
+            class="w-full mb-2 px-4 py-2 border rounded-md"
+          ></select>
+          <select
+            id="return-book-select"
+            class="w-full mb-4 px-4 py-2 border rounded-md"
+          ></select>
+          <button
+            id="return-book"
+            class="bg-red-500 text-white px-4 py-2 rounded-md w-full"
+          >
+            Return Book
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
