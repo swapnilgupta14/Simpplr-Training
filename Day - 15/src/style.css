@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer {
+    .parallax-container {
+        perspective: 10px;
+    }
+    .header {
+        transform-style: preserve-3d;
+    }
+    .background {
+        transform: translateZ(-10px) scale(2);
+    }
+    .foreground {
+        transform: translateZ(-5px) scale(1.5);
+    }
+}

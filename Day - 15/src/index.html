@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flight Booking App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../dist/output.css" />
+  </head>
+  <body>
+    <div
+      class="parallax-container h-screen w-screen overflow-x-hidden overflow-y-auto"
+    >
+      <header
+        class="relative flex flex-col items-center justify-center h-full w-full -z-10 header text-center px-4"
+      >
+        <img
+          src="../public/Mountain.png"
+          alt="background mountains"
+          class="background absolute h-full w-full object-cover -z-1"
+        />
+        <img
+          src="../public/Trees.png"
+          alt="foreground trees"
+          class="foreground absolute w-full h-full object-cover -z-1"
+        />
+        <h1
+          class="text-6xl md:text-8xl lg:text-9xl font-bold text-white [text-shadow:0_4px_10px_rgba(0,0,0,0.5)] leading-tight"
+        >
+          Parallax with TailwindCSS
+        </h1>
+        <p
+          class="text-lg md:text-xl lg:text-2xl font-medium text-white mt-4 [text-shadow:0_2px_5px_rgba(0,0,0,0.3)]"
+        >
+          Experience beautiful parallax effects with smooth scrolling
+        </p>
+      </header>
+
+      <section
+        class="bg-gray-900 z-10 text-white px-8 md:px-20 py-24 md:py-40"
+      >
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-semibold mb-6">
+          How the Parallax Effect Works
+        </h2>
+        <p class="text-lg md:text-2xl leading-relaxed mb-6">
+          The parallax effect is created by using multiple layers of images that
+          move at different speeds as you scroll. The background and foreground
+          images, such as the mountains and trees here, are placed on separate
+          layers and positioned absolutely. This allows for a smooth scrolling
+          experience where the background moves slower than the content in the
+          foreground, creating depth and a more immersive visual. TailwindCSS is
+          used to handle the styling of the layout, including text positioning,
+          colors, and responsiveness. The images are set to cover the entire
+          screen using object-cover, and the absolute positioning allows them to
+          stack on top of one another for the parallax effect.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>
