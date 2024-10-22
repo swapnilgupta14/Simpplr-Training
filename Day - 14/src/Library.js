@@ -42,14 +42,12 @@ User.prototype.returnBook = function (book) {
   }
 };
 
-
 // // 4 Inheritance Prototypal
 // function LibraryMember(memberName, membershipId) {
 //   User.call(this, memberName);
 //   this.membershipId = membershipId;
 //   //   console.log(this);
 // }
-
 
 // // 5 -- demonstrate prototype chaining
 // LibraryMember.prototype = Object.create(User.prototype);
@@ -59,7 +57,6 @@ User.prototype.returnBook = function (book) {
 //     `Member Name: ${this.userName}, Membership ID: ${this.membershipId}`
 //   );
 // };
-
 
 const users = [];
 const bookOne = createNewBook("Book1", "Author1");
@@ -79,10 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
     "borrowed-books-section"
   );
 
+  // Modal elements
+  const addBookModal = document.getElementById("add-book-modal");
+  const newBookTitle = document.getElementById("new-book-title");
+  const newBookAuthor = document.getElementById("new-book-author");
 
   const renderAvailableBooks = () => {
     availableBooksList.innerHTML = "";
-   
     bookSelect.innerHTML = '<option value="">Select a book</option>';
 
     Library.listAvailableBooks().forEach((book) => {
@@ -134,15 +134,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  document
+    .querySelector(".hover\\:cursor-pointer")
+    .addEventListener("click", () => {
+      addBookModal.classList.remove("hidden");
+    });
+
+  document.getElementById("close-modal").addEventListener("click", () => {
+    addBookModal.classList.add("hidden");
+    newBookTitle.value = "";
+    newBookAuthor.value = "";
+  });
+
+  document.getElementById("add-book").addEventListener("click", () => {
+    const title = newBookTitle.value.trim();
+    const author = newBookAuthor.value.trim();
+
+    if (title && author) {
+      const newBook = createNewBook(title, author);
+      Library.addBookToLibrary(newBook);
+      renderAvailableBooks();
+
+      addBookModal.classList.add("hidden");
+      newBookTitle.value = "";
+      newBookAuthor.value = "";
+      alert(`Book "${title}" by ${author} added successfully.`);
+    } else {
+      alert("Please fill in both the book title and author.");
+    }
+  });
+
   document.getElementById("create-user").addEventListener("click", () => {
     const userName = document.getElementById("user-name").value.trim();
     const membershipId = document.getElementById("membership-id").value.trim();
-
-    //  if (users.length < 1) {
-    //   document.getElementById("input-return").innerText = "Create a user";
-    // }else{
-    //   document.getElementById("input-return").innerText = "Select User";
-    // }
 
     if (userName) {
       const user = new User(userName, membershipId);

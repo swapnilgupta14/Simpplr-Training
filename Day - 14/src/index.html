@@ -16,6 +16,41 @@
   </head>
 
   <body class="bg-gray-100 min-h-screen p-8">
+    <div
+      id="add-book-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-medium mb-4">Add a New Book</h2>
+        <input
+          type="text"
+          id="new-book-title"
+          placeholder="Enter Book Title"
+          class="w-full mb-2 px-4 py-2 border rounded-md"
+        />
+        <input
+          type="text"
+          id="new-book-author"
+          placeholder="Enter Author Name"
+          class="w-full mb-4 px-4 py-2 border rounded-md"
+        />
+        <div class="flex justify-between">
+          <button
+            id="add-book"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Add Book
+          </button>
+          <button
+            id="close-modal"
+            class="bg-red-500 text-white px-4 py-2 rounded-md"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="w-full max-w-7xl mx-auto">
       <h1 class="text-4xl font-semibold text-center mb-12">
         Library Management System
@@ -23,7 +58,14 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <div class="bg-white shadow-md rounded-lg p-6">
-          <h2 class="text-2xl font-medium mb-4">Available Books</h2>
+          <div class="flex justify-between">
+            <h2 class="text-2xl font-medium mb-4">Available Books</h2>
+            <p
+              class="bg-black text-white h-7 w-7 flex justify-center items-center hover:cursor-pointer rounded-full"
+            >
+              +
+            </p>
+          </div>
           <ul id="available-books" class="space-y-2"></ul>
         </div>
 
