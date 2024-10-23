@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Processing</title>
+    <link rel="stylesheet" href="../dist/output.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="container mx-auto p-10">
+      <h1 class="text-3xl font-medium text-center mb-6">
+        Restaurant Order Processing System
+      </h1>
+
+      <div id="order-list" class="mb-6">
+        <h2 class="text-xl font-semibold mb-4">Orders</h2>
+        <div id="orders-container" class="space-y-4"></div>
+      </div>
+
+      <div
+        id="add-order-form"
+        class="mb-6 p-4 border border-gray-300 rounded bg-white"
+      >
+        <h2 class="text-xl font-semibold mb-4">Add New Order</h2>
+        <div class="flex space-x-4">
+          <input
+            id="orderId"
+            type="number"
+            placeholder="Order ID"
+            class="border p-2 rounded w-1/4"
+          />
+          <input
+            id="items"
+            type="text"
+            placeholder="Items (comma separated)"
+            class="border p-2 rounded w-1/4"
+          />
+          <input
+            id="timeToPrepare"
+            type="number"
+            placeholder="Preparation Time (sec)"
+            class="border p-2 rounded w-1/4"
+          />
+          <button
+            id="add-order-btn"
+            class="bg-blue-500 text-white p-2 rounded w-1/4"
+          >
+            Add Order
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center mb-6">
+        <button
+          id="start-processing-btn"
+          class="bg-green-500 text-white p-2 rounded"
+        >
+          Start Processing Orders
+        </button>
+      </div>
+
+      <div
+        id="logs"
+        class="border border-gray-300 p-6 bg-white rounded-lg shadow-lg mx-auto mt-12"
+      >
+        <div class="flex justify-between items-center mb-6 h-fit">
+          <h2 class="text-3xl font-medium text-gray-900">
+            Order Processing Logs
+          </h2>
+        
+        </div>
+
+        <div
+          id="logs-container"
+          class="space-y-4 max-h-80 overflow-y-auto p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-inner"
+        ></div>
+      </div>
+
+      <!-- <div id="orders-container" class="mt-8 max-w-xl mx-auto space-y-4"></div> -->
+    </div>
+    <script src="./orderProcessing.js"></script>
+    <script src="./orderProcessingUI.js"></script>
+  </body>
+</html>
