@@ -1,4 +1,4 @@
-class Employee {
+class Faculty {
   public name: string;
   private salary: number;
   protected department: string;
@@ -7,11 +7,11 @@ class Employee {
     this.name = name;
     this.salary = salary;
     this.department = department;
-    console.log("Employee constructor accessed");
+    console.log("Faculty constructor accessed");
   }
 
   public displayName(): void {
-    console.log(`Employee Name: ${this.name}`);
+    console.log(`Faculty Name: ${this.name}`);
   }
 
   private calculateBonus(): number {
@@ -28,10 +28,10 @@ class Employee {
   }
 }
 
-class Manager extends Employee {
+class Manager extends Faculty {
   constructor(name: string, salary: number) {
     super(name, salary, "Management");
-    console.log("Manager constructor accessed")
+    console.log("Manager constructor accessed");
   }
 
   public showDepartment(): void {
@@ -39,32 +39,40 @@ class Manager extends Employee {
     console.log(`Department using this: ${this.getDepartment()}`);
   }
 
-//   public showSalary(): void {
-//       console.log(this.salary);
-//       console.log(this.calculateBonus())
-//   }
+  //   public showSalary(): void {
+  //       console.log(this.salary);
+  //       console.log(this.calculateBonus())
+  //   }
 }
 
-console.log("\n------------before emp obj instantiation-----------------\n")
-const emp = new Employee("Person1", 50000, "CS");
+console.log("\n------------before Faculty1 obj instantiation-----------------\n");
 
-console.log("\n------------After emp instance-----------------------------------\n");
+const emp = new Faculty("Faculty1", 50000, "CS");
 
-const manager = new Manager("Person2", 80000);
+console.log(
+  "\n------------After Faculty1 instance-----------------------------------\n"
+);
 
-console.log("\n------------After Manager instance----------------------------------\n");
+const manager = new Manager("Manager1", 80000);
 
+console.log(
+  "\n------------After Manager instance----------------------------------\n"
+);
 
 emp.displayName();
 console.log(emp.name);
 
-// console.log(emp.salary); 
+// console.log(emp.salary);
 // console.log(emp.department);
 // console.log(emp.getDepartment());
 // console.log(emp.calculateBonus());
 
-console.log("\n------------accessing pvt and protected------------------------\n");
+console.log(
+  "\n------------accessing pvt and protected------------------------\n"
+);
 emp.accessPrivateMethod();
 
-console.log("\n------------accessing protected using subclass------------------------\n");
+console.log(
+  "\n------------accessing protected using subclass------------------------\n"
+);
 manager.showDepartment();

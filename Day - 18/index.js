@@ -1,43 +1,61 @@
-"use strict";
-class Employee {
-    constructor(name, salary, department) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Faculty = /** @class */ (function () {
+    function Faculty(name, salary, department) {
         this.name = name;
         this.salary = salary;
         this.department = department;
-        console.log("Employee constructor accessed");
+        console.log("Faculty constructor accessed");
     }
-    displayName() {
-        console.log(`Employee Name: ${this.name}`);
-    }
-    calculateBonus() {
+    Faculty.prototype.displayName = function () {
+        console.log("Faculty Name: ".concat(this.name));
+    };
+    Faculty.prototype.calculateBonus = function () {
         return this.salary * 0.1;
-    }
-    getDepartment() {
+    };
+    Faculty.prototype.getDepartment = function () {
         return this.department;
-    }
-    accessPrivateMethod() {
+    };
+    Faculty.prototype.accessPrivateMethod = function () {
         console.log(this.calculateBonus());
         console.log(this.getDepartment());
-    }
-}
-class Manager extends Employee {
-    constructor(name, salary) {
-        super(name, salary, "Management");
+    };
+    return Faculty;
+}());
+var Manager = /** @class */ (function (_super) {
+    __extends(Manager, _super);
+    function Manager(name, salary) {
+        var _this = _super.call(this, name, salary, "Management") || this;
         console.log("Manager constructor accessed");
+        return _this;
     }
-    showDepartment() {
-        console.log(`Department using super: ${super.getDepartment()}`);
-        console.log(`Department using this: ${this.getDepartment()}`);
-    }
-}
-console.log("\n------------before emp obj instantiation-----------------\n");
-const emp = new Employee("Person1", 50000, "CS");
-console.log("\n------------After emp instance-----------------------------------\n");
-const manager = new Manager("Person2", 80000);
+    Manager.prototype.showDepartment = function () {
+        console.log("Department using super: ".concat(_super.prototype.getDepartment.call(this)));
+        console.log("Department using this: ".concat(this.getDepartment()));
+    };
+    return Manager;
+}(Faculty));
+console.log("\n------------before Faculty1 obj instantiation-----------------\n");
+var emp = new Faculty("Faculty1", 50000, "CS");
+console.log("\n------------After Faculty1 instance-----------------------------------\n");
+var manager = new Manager("Manager1", 80000);
 console.log("\n------------After Manager instance----------------------------------\n");
 emp.displayName();
 console.log(emp.name);
-// console.log(emp.salary); 
+// console.log(emp.salary);
 // console.log(emp.department);
 // console.log(emp.getDepartment());
 // console.log(emp.calculateBonus());
