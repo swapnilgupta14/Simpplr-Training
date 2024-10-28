@@ -1,8 +1,8 @@
 enum Genre {
   FICTION = "FICTION",
   NON_FICTION = "NON_FICTION",
-  MYSTERY = "MYSTERY",
-  SCIENCE_FICTION = "SCIENCE_FICTION",
+  HORROR = "HORROR",
+  SCI_FI = "SCI_FI",
   BIOGRAPHY = "BIOGRAPHY",
   FANTASY = "FANTASY",
 }
@@ -41,8 +41,8 @@ const countBooksByGenre = (books: Book[]): GenreCount => {
   const initialCount: GenreCount = {
     [Genre.FICTION]: 0,
     [Genre.NON_FICTION]: 0,
-    [Genre.MYSTERY]: 0,
-    [Genre.SCIENCE_FICTION]: 0,
+    [Genre.HORROR]: 0,
+    [Genre.SCI_FI]: 0,
     [Genre.BIOGRAPHY]: 0,
     [Genre.FANTASY]: 0,
   };
@@ -51,7 +51,6 @@ const countBooksByGenre = (books: Book[]): GenreCount => {
     acc[book.genre]++;
     return acc;
   }, initialCount);
-  // console.log("result", result);
   return result;
 };
 
@@ -62,7 +61,7 @@ const books: Book[] = [
     genre: Genre.FICTION,
   },
   { title: "Book2", author: "Author2", genre: Genre.NON_FICTION },
-  { title: "Book3", author: "Author3", genre: Genre.SCIENCE_FICTION },
+  { title: "Book3", author: "Author3", genre: Genre.SCI_FI },
   { title: "Book4", author: "Author4", genre: Genre.FANTASY },
   { title: "Book5", author: "Author5", genre: Genre.FICTION },
 ];
@@ -77,7 +76,7 @@ const members: Member[] = [
 
 console.log("\n");
 console.log("Fiction Books:", getBooksByGenre(books, Genre.FICTION));
-console.log("Mystery Books:", getBooksByGenre(books, Genre.MYSTERY));
+console.log("HORROR Books:", getBooksByGenre(books, Genre.HORROR));
 console.log("\n");
 console.log("Regular Members:", getMembersByRole(members, Role.MEMBER));
 console.log("Guests", getMembersByRole(members, Role.GUEST));
