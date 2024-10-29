@@ -32,9 +32,9 @@ function main() {
   });
   console.log("\nCustomers:", listCustomers());
 
+
   const order = createOrder(customer, products);
   console.log("\nOrder created:", order);
-
 
   const customer3 : Customer =   {
     id: "C3",

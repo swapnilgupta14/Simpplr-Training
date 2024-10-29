@@ -9,10 +9,11 @@ let customers: Customer[] = [];
 export function addCustomer(customer: Customer): void {
     const existingCustomer = customers.find(c => c.email === customer.email);
     if (existingCustomer) {
-        console.log(`\nCustomer with email ${customer.email} already exists`);
+        console.log(`\nError: Customer with email ${customer.email} already exists`);
         return;
     }
     customers.push(customer);
+    console.log(`New Customer with email ${customer.email} is created`)
 }
 
 export function listCustomers(): Customer[] {
