@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flight Booking App</title>
+    <title>Train Booking App</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
@@ -18,7 +18,6 @@
             id="bookingDropdown"
             class="px-4 py-2 bg-gray-300 text-gray-800 rounded"
           >
-            <option value="flight">Flight Booking System</option>
             <option value="train">Train Booking System</option>
           </select>
         </div>
@@ -31,9 +30,9 @@
           >
             <div class="flex justify-between items-start">
               <h2 class="text-xl font-semibold mb-6 text-gray-700">
-                Available Flights
-                <p id="totalFlights" class="text-xs text-gray-500">
-                  Total Flights: 0
+                Available trains
+                <p id="totaltrains" class="text-xs text-gray-500">
+                  Total trains: 0
                 </p>
               </h2>
 
@@ -66,33 +65,18 @@
             </div>
 
             <div
-              id="flightList"
+              id="trainList"
               class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"
             ></div>
           </section>
-
-          <!-- <section class="flex justify-between gap-4">
-            <button
-              id="sortFlightsBtn"
-              class="w-full button-primary text-white py-2 px-4 rounded-lg"
-            >
-              Sort by Price
-            </button>
-            <button
-              id="filterFlightsBtn"
-              class="w-full button-secondary text-white py-2 px-4 rounded-lg"
-            >
-              Filter by Price
-            </button>
-          </section> -->
         </div>
 
         <div class="grid grid-cols-2 gap-6 flex-1">
           <section class="form-section">
             <h2 class="text-xl font-semibold mb-6 text-gray-700">
-              Search Flights
+              Search trains
             </h2>
-            <form id="searchFlightForm" class="space-y-6">
+            <form id="searchtrainForm" class="space-y-6">
               <div>
                 <label
                   for="from"
@@ -122,30 +106,30 @@
                 type="submit"
                 class="w-full button-primary text-white py-2 rounded-lg"
               >
-                Search Flight
+                Search train
               </button>
             </form>
           </section>
 
           <section class="form-section">
             <h2 class="text-xl font-semibold mb-6 text-gray-700">
-              Book a Flight
+              Book a train
             </h2>
             <form
-              id="bookFlightForm"
+              id="booktrainForm"
               class="flex flex-col justify-between h-[78%]"
             >
               <div>
                 <label
-                  for="flightNumber"
+                  for="trainNumber"
                   class="block text-sm font-medium text-gray-700"
-                  >Flight Number:</label
+                  >Train Number:</label
                 >
                 <input
                   type="text"
-                  id="flightNumber"
+                  id="trainNumber"
                   class="mt-2 input-field block w-full rounded-lg"
-                  placeholder="Enter Flight Number"
+                  placeholder="Enter Train Number"
                 />
               </div>
               <p id="bookResult" class="text-sm text-gray-600 mt-4"></p>
@@ -153,27 +137,27 @@
                 type="submit"
                 class="w-full button-secondary text-white py-2 rounded-lg"
               >
-                Book Flight
+                Book train
               </button>
             </form>
           </section>
 
           <section class="form-section col-span-2">
             <h2 class="text-xl font-semibold mb-6 text-gray-700">
-              Add New Flight
+              Add New train
             </h2>
-            <form id="addFlightForm" class="grid grid-cols-2 gap-6">
+            <form id="addtrainForm" class="grid grid-cols-2 gap-6">
               <div>
                 <label
-                  for="newFlightNumber"
+                  for="newtrainName"
                   class="block text-sm font-medium text-gray-700"
-                  >Flight Number:</label
+                  >Train Name:</label
                 >
                 <input
                   type="text"
-                  id="newFlightNumber"
+                  id="newtrainName"
                   class="mt-2 input-field block w-full rounded-lg"
-                  placeholder="Flight Number"
+                  placeholder="Train Name"
                 />
               </div>
               <div>
@@ -220,14 +204,13 @@
                 type="submit"
                 class="col-span-2 button-primary text-white py-2 rounded-lg"
               >
-                Add Flight
+                Add train
               </button>
             </form>
           </section>
         </div>
       </div>
     </div>
-    <script src="manageTabs.js"></script>
-    <script src="./flightBooking.js"></script>
+    <script src="./trainBooking.js"></script>
   </body>
 </html>
