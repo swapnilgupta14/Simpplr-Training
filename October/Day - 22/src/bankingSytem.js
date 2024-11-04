@@ -28,7 +28,8 @@ function compareTransactions(a, b, field) {
     let comparison = 0;
     switch (field) {
         case "date":
-            comparison = new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+            comparison =
+                new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
             break;
         case "amount":
             comparison = Math.abs(b.amount) - Math.abs(a.amount);
@@ -201,8 +202,30 @@ function displayTransactions(transactions) {
         transactionContainer.appendChild(transactionEl);
     });
 }
+function generateUniqueUsername(firstName, lastName, users) {
+    const baseUsername = `${firstName[0].toLowerCase()}${lastName[0].toLowerCase()}`;
+    if (!users.find((user) => user.username === baseUsername)) {
+        return baseUsername;
+    }
+    const existingUsernames = users
+        .map((user) => user.username)
+        .filter((username) => username === baseUsername ||
+        (username.startsWith(baseUsername) &&
+            /^\d+$/.test(username.slice(baseUsername.length))));
+    let highestNumber = 1;
+    existingUsernames.forEach((username) => {
+        if (username === baseUsername)
+            return;
+        const numberSuffix = parseInt(username.slice(baseUsername.length));
+        if (!isNaN(numberSuffix) && numberSuffix >= highestNumber) {
+            highestNumber = numberSuffix;
+        }
+    });
+    return `${baseUsername}${highestNumber + 1}`;
+}
 function signup(firstName, lastName, password) {
-    const username = `${firstName[0].toLowerCase()}${lastName[0].toLowerCase()}`;
+    const users = getUsers();
+    const username = generateUniqueUsername(firstName, lastName, users);
     const accountNumber = generateAccountNumber();
     const newUser = {
         username,
@@ -211,7 +234,6 @@ function signup(firstName, lastName, password) {
         lastName,
         account: { accountNumber, balance: 0, transactions: [] },
     };
-    const users = getUsers();
     users.push(newUser);
     saveUsers(users);
     alert(`User created! Your username is ${username} and account number is ${accountNumber}`);

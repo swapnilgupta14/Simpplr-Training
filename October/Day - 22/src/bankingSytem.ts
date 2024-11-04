@@ -49,7 +49,11 @@ function merge(
   let rightIndex = 0;
 
   while (leftIndex < left.length && rightIndex < right.length) {
-    const comparison = compareTransactions(left[leftIndex], right[rightIndex], field);
+    const comparison = compareTransactions(
+      left[leftIndex],
+      right[rightIndex],
+      field
+    );
     if (comparison <= 0) {
       result.push(left[leftIndex]);
       leftIndex++;
@@ -71,7 +75,8 @@ function compareTransactions(
 
   switch (field) {
     case "date":
-      comparison = new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+      comparison =
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
       break;
     case "amount":
       comparison = Math.abs(b.amount) - Math.abs(a.amount);
@@ -81,7 +86,7 @@ function compareTransactions(
       break;
   }
 
-  return comparison; 
+  return comparison;
 }
 
 let currentUser: User | null = null;
@@ -132,7 +137,9 @@ function updateUI(): void {
   );
   currentDateElement.textContent = new Date().toLocaleDateString();
 
-  const transactionList = document.querySelector(".transaction-list") as HTMLDivElement;
+  const transactionList = document.querySelector(
+    ".transaction-list"
+  ) as HTMLDivElement;
   transactionList.innerHTML = `
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 p-2 rounded-lg mb-6">
       <h4 class="text-xl font-semibold text-black">Transaction History</h4>
@@ -150,9 +157,14 @@ function updateUI(): void {
   const sortField = (document.getElementById("sortField") as HTMLSelectElement)
     .value as SortField;
 
-  const sortedTransactions = mergeSort(currentUser.account.transactions, sortField);
-  
-  const transactionContainer = document.getElementById("transactionContainer") as HTMLDivElement;
+  const sortedTransactions = mergeSort(
+    currentUser.account.transactions,
+    sortField
+  );
+
+  const transactionContainer = document.getElementById(
+    "transactionContainer"
+  ) as HTMLDivElement;
   transactionContainer.innerHTML = "";
 
   sortedTransactions.forEach((transaction) => {
@@ -229,11 +241,16 @@ function updateUI(): void {
   totalOutElement.textContent = formatCurrency(totalOut);
   totalInterestElement.textContent = formatCurrency(totalInterest);
 
-  const sortFieldSelect = document.getElementById("sortField") as HTMLSelectElement;
+  const sortFieldSelect = document.getElementById(
+    "sortField"
+  ) as HTMLSelectElement;
   if (sortFieldSelect) {
     sortFieldSelect.addEventListener("change", () => {
       const selectedField = sortFieldSelect.value as SortField;
-      const sortedTransactions = mergeSort(currentUser!.account.transactions, selectedField);
+      const sortedTransactions = mergeSort(
+        currentUser!.account.transactions,
+        selectedField
+      );
       displayTransactions(sortedTransactions);
     });
   }
@@ -241,8 +258,10 @@ function updateUI(): void {
 
 function displayTransactions(transactions: Transaction[]): void {
   if (!currentUser) return;
-  
-  const transactionContainer = document.getElementById("transactionContainer") as HTMLDivElement;
+
+  const transactionContainer = document.getElementById(
+    "transactionContainer"
+  ) as HTMLDivElement;
   transactionContainer.innerHTML = "";
 
   transactions.forEach((transaction) => {
@@ -294,8 +313,41 @@ function displayTransactions(transactions: Transaction[]): void {
   });
 }
 
+function generateUniqueUsername(
+  firstName: string,
+  lastName: string,
+  users: User[]
+): string {
+  const baseUsername: string = `${firstName[0].toLowerCase()}${lastName[0].toLowerCase()}`;
+
+  if (!users.find((user) => user.username === baseUsername)) {
+    return baseUsername;
+  }
+
+  const existingUsernames = users
+    .map((user) => user.username)
+    .filter(
+      (username) =>
+        username === baseUsername ||
+        (username.startsWith(baseUsername) &&
+          /^\d+$/.test(username.slice(baseUsername.length)))
+    );
+
+  let highestNumber: number = 1;
+  existingUsernames.forEach((username) => {
+    if (username === baseUsername) return;
+    const numberSuffix = parseInt(username.slice(baseUsername.length));
+    if (!isNaN(numberSuffix) && numberSuffix >= highestNumber) {
+      highestNumber = numberSuffix;
+    }
+  });
+
+  return `${baseUsername}${highestNumber + 1}`;
+}
+
 function signup(firstName: string, lastName: string, password: string): void {
-  const username: string = `${firstName[0].toLowerCase()}${lastName[0].toLowerCase()}`;
+  const users: User[] = getUsers();
+  const username: string = generateUniqueUsername(firstName, lastName, users);
   const accountNumber: string = generateAccountNumber();
 
   const newUser: User = {
@@ -306,7 +358,6 @@ function signup(firstName: string, lastName: string, password: string): void {
     account: { accountNumber, balance: 0, transactions: [] },
   };
 
-  const users: User[] = getUsers();
   users.push(newUser);
   saveUsers(users);
 

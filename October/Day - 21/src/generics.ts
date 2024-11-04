@@ -18,7 +18,7 @@ interface Electronics extends BaseItem {
   warranty: boolean;
 }
 
-// class
+
 class Inventory<T extends BaseItem> {
   private items: T[] = [];
 
@@ -88,14 +88,14 @@ clothingInventory.addItem({
   id: "C001",
   name: "Cloth1",
   size: "M",
-  material: "Cotton",
+  material: "Mat1",
 });
 
 clothingInventory.addItem({
   id: "C002",
   name: "Cloth2",
   size: "L",
-  material: "Denim",
+  material: "Mat2",
 });
 
 const removedClothing = clothingInventory.removeItem("C001");
@@ -124,7 +124,7 @@ const updatedElecItem: Electronics = {
   id: "E001",
   name: "New Name",
   brand: "New Brand",
-  warranty: false
+  warranty: false,
 };
 
 electronicsInventory.updateItem("E001", updatedElecItem);
