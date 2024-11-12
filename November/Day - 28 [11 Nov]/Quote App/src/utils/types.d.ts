@@ -13,3 +13,8 @@ export interface QuotesProps {
   setLimit: React.Dispatch<React.SetStateAction<string>>;
   children?: React.ReactNode;
 }
+
+export interface DailyQuoteProps {
+  dailyQuote: Quote | null;
+  isLoading: boolean;
+}

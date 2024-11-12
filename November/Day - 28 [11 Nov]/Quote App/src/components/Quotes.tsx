@@ -1,15 +1,14 @@
 import React from 'react';
-import { QuotesProps } from "./types";
+import { QuotesProps } from "../utils/types";
 
 const Quotes: React.FC<QuotesProps> = ({ quotes, setQuotes, setLimit, children }) => {
-
-    const handleClearQuotes = () => {
+    const handleClearQuotes = (): void => {
         setQuotes([]);
         setLimit('');
     };
 
     return (
-        <section className="w-full max-w-[80%] mx-auto mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section className="w-full max-w-[80%] mx-auto mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3  overflow-x-hidden">
             {quotes.map((quote, index) => (
                 <div key={index} className="p-4 bg-white rounded shadow-md border-l-4 border-blue-500">
                     <p className="text-lg font-serif mb-2">"{quote.content}"</p>

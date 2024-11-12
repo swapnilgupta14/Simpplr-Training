@@ -24,6 +24,6 @@
     "emitDeclarationOnly": true
   },
   "include": [
-    "../Pet App/src"
+    "./src"
   ]
 }

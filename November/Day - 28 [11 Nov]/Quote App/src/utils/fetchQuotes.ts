@@ -1,7 +1,6 @@
 import { Quote } from "./types";
 
 export const fetchRandomQuote = async (limit: number = 1): Promise<Quote[]> => {
-//   console.log("limitl:", limit);
   const response = await fetch(
     `http://api.quotable.io/quotes/random?limit=${limit}`
   );
