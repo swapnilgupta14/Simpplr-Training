@@ -9,7 +9,7 @@ import { State } from '../global';
 
 const Application = () => {
   const initialState: State = {
-    hexColor: "#ffffff"
+    hexColor: "#000000"
   };
 
   const [state, dispatch] = useReducer(reducerFunction, initialState);
@@ -22,7 +22,7 @@ const Application = () => {
       />
       <AdjustColors hexColor={state.hexColor} dispatch={dispatch} />
       <RelatedColors hexColor={state.hexColor} dispatch={dispatch}/>
-      <SavedColors hexColor={state.hexColor}/>
+      <SavedColors hexColor={state.hexColor} dispatch_1={dispatch}/>
     </div>
   );
 };

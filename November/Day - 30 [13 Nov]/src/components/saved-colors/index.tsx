@@ -2,9 +2,11 @@ import { useReducer } from 'react';
 import id from 'lodash.uniqueid';
 import AddSavedColor from './add-saved-color';
 import SavedColor from './saved-color';
+import { ActionUnion } from '../../global';
 
 type SavedColorsProps = {
   hexColor: string;
+  dispatch_1: React.Dispatch<ActionUnion>
 };
 
 type SavedColorState = {
@@ -24,10 +26,7 @@ const initialSavedColors: SavedColorState[] = [
 const savedReducer = (state: SavedColorState[], action: SavedActionType): SavedColorState[] => {
   switch (action.type) {
     case 'SAVE_COLOR':
-      return [
-        ...state,
-        { id: id(), name: action.payload.name, hexColor: action.payload.hexColor },
-      ];
+      return [...state, { id: id(), name: action.payload.name, hexColor: action.payload.hexColor },];
     case 'REMOVE_COLOR':
       return state.filter((color) => color.id !== action.payload.id);
     default:
@@ -35,7 +34,7 @@ const savedReducer = (state: SavedColorState[], action: SavedActionType): SavedC
   }
 };
 
-const SavedColors = ({ hexColor }: SavedColorsProps) => {
+const SavedColors = ({ hexColor, dispatch_1 }: SavedColorsProps) => {
   const [savedColors, dispatch] = useReducer(savedReducer, initialSavedColors);
 
   return (
@@ -52,6 +51,7 @@ const SavedColors = ({ hexColor }: SavedColorsProps) => {
           name={name}
           hexColor={hexColor}
           onRemove={() => dispatch({ type: 'REMOVE_COLOR', payload: { id } })}
+          dispatch_1 = {dispatch_1}
         />
       ))}
     </section>

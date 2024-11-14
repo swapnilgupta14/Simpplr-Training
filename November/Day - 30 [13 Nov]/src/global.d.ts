@@ -33,3 +33,12 @@ export type CMYKColorAction = {
   payload: { cmyk: [c: number, m: number, y: number, k: number];};
 };
 
+export type AddSavedColorState = {
+  savedColorName: string;
+  error: string | null;
+};
+
+export type SavedColorActionType = { type: 'SET_COLOR_NAME'; payload: string }
+  | { type: 'SET_ERROR'; payload: string }
+  | { type: 'CLEAR_ERROR' }
+  | { type: 'RESET' };
