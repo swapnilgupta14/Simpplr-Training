@@ -1,18 +1,19 @@
-import { ChangeEventHandler } from 'react';
+import { useContext } from 'react';
+import { ColorContext } from '../../ColorContext';
 import ColorSelect from './color-select';
 import ColorSwatch from './color-swatch';
 
-type ColorPickerProps = {
-  hexColor: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
+const ColorPicker = () => {
+  const { state, dispatch } = useContext(ColorContext);
 
-const ColorPicker = ({ hexColor, onChange }: ColorPickerProps) => {
   return (
     <div className="flex w-full flex-col gap-4">
       <h3>Select Color</h3>
-      <ColorSelect hexColor={hexColor} onChange={onChange} />
-      <ColorSwatch hexColor={hexColor} />
+      <ColorSelect
+        hexColor={state.hexColor}
+        onChange={(e) => dispatch({ type: "UPDATE_HEX_COLOR", payload: e.target.value })}
+      />
+      <ColorSwatch hexColor={state.hexColor} />
     </div>
   );
 };

@@ -1,13 +1,17 @@
 import LabeledInput from '../shared/labeled-input';
-import { ActionUnion } from '../../global';
+// import { ColorActions } from '../../global';
 
-type HexToRGBProps = {
-  hexColor: string;
-  dispatch: React.Dispatch<ActionUnion>
-};
+import { useContext } from 'react';
+import { ColorContext } from '../../ColorContext';
 
-const HexToRGB = ({ hexColor, dispatch }: HexToRGBProps) => {
-  const color = require('color-convert').hex.rgb(hexColor);
+// type HexToRGBProps = {
+//   hexColor: string;
+//   dispatch: React.Dispatch<ColorActions>
+// };
+
+const HexToRGB = () => {
+  const {state, dispatch} = useContext(ColorContext);
+  const color = require('color-convert').hex.rgb(state.hexColor);
   const [r, g, b] = color;
 
   return (

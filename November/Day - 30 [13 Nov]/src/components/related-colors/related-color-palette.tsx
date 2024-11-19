@@ -1,18 +1,26 @@
 import React from 'react';
 import ColorChangeSwatch from '../shared/color-change-swatch';
-import { ActionUnion } from '../../global';
+// import { ColorActions } from '../../global';
+
+
+import { useContext } from 'react';
+import { ColorContext } from '../../ColorContext';
 
 type RelatedColorPaletteProps = {
   title: string;
   hexColors: string[];
-  dispatch: React.Dispatch<ActionUnion>
+  // dispatch: React.Dispatch<ColorActions>
 };
+
 
 const RelatedColorPalette = ({
   title,
   hexColors,
-  dispatch,
+  // dispatch,
 }: RelatedColorPaletteProps) => {
+
+  const {dispatch} = useContext(ColorContext);
+
   return (
     <section>
       <h3 className="mb-4">{title}</h3>

@@ -2,14 +2,14 @@ export type State= {
   hexColor: string;
 };
 
-export type ActionUnion = HexColorAction | RGBColorAction | CMYKColorAction | HSLColorAction | HSVColorAction;
+export type ColorActions = HexColorAction | RGBColorAction | CMYKColorAction | HSLColorAction | HSVColorAction;
 
 export type HexColorAction = {
   type: 'UPDATE_HEX_COLOR';
   payload: string;
 };
 
-export type RGBColorAction = {
+export type RGBColorAction= {
   type: 'SET_RGB_COLOR';
   payload: {
     rgb: [r: number, g: number, b: number];

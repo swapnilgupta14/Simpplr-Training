@@ -1,12 +1,15 @@
+import { useContext } from 'react';
+import { ColorContext } from '../../ColorContext';
 import colorNames from 'color-name-list';
 
-type ColorNameProps = {
-  hexColor: string;
-};
+// type ColorNameProps = {
+//   hexColor: string;
+// };
 
-const ColorName = ({ hexColor }: ColorNameProps) => {
+const ColorName = () => {
+  const { state } = useContext(ColorContext);
   const color = colorNames.find((color) => {
-    return color.hex === hexColor.toLowerCase();
+    return color.hex === state.hexColor.toLowerCase();
   });
 
   if (!color) return null;

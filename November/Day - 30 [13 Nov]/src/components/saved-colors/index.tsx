@@ -1,13 +1,14 @@
-import { useReducer } from 'react';
+import { useContext, useReducer } from 'react';
 import id from 'lodash.uniqueid';
 import AddSavedColor from './add-saved-color';
 import SavedColor from './saved-color';
-import { ActionUnion } from '../../global';
+import { ColorContext } from '../../ColorContext';
+// import { ColorActions } from '../../global';
 
-type SavedColorsProps = {
-  hexColor: string;
-  dispatch_1: React.Dispatch<ActionUnion>
-};
+// type SavedColorsProps = {
+//   hexColor: string;
+//   dispatch_1: React.Dispatch<ColorActions>
+// };
 
 type SavedColorState = {
   id: string;
@@ -34,15 +35,17 @@ const savedReducer = (state: SavedColorState[], action: SavedActionType): SavedC
   }
 };
 
-const SavedColors = ({ hexColor, dispatch_1 }: SavedColorsProps) => {
-  const [savedColors, dispatch] = useReducer(savedReducer, initialSavedColors);
+const SavedColors = () => {
+  const {state} = useContext(ColorContext);
+  const hexColor = state.hexColor;
+  const [savedColors, dispatchSavedColor] = useReducer(savedReducer, initialSavedColors);
 
   return (
     <section className="flex flex-col w-full gap-4 sm:col-span-2">
       <h3>Save Color</h3>
       <AddSavedColor
         onSave={(name) =>
-          dispatch({ type: 'SAVE_COLOR', payload: { name, hexColor } })
+          dispatchSavedColor({ type: 'SAVE_COLOR', payload: { name, hexColor } })
         }
       />
       {savedColors.map(({ id, name, hexColor }) => (
@@ -50,8 +53,7 @@ const SavedColors = ({ hexColor, dispatch_1 }: SavedColorsProps) => {
           key={id}
           name={name}
           hexColor={hexColor}
-          onRemove={() => dispatch({ type: 'REMOVE_COLOR', payload: { id } })}
-          dispatch_1 = {dispatch_1}
+          onRemove={() => dispatchSavedColor({ type: 'REMOVE_COLOR', payload: { id } })}
         />
       ))}
     </section>

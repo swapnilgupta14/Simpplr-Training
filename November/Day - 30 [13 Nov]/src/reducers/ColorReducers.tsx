@@ -1,8 +1,8 @@
 
-import { State, ActionUnion } from "../global";
+import { State, ColorActions } from "../global";
 import { cmyk, hsl, hsv, rgb } from 'color-convert';
 
-export const reducerFunction = (state: State , action: ActionUnion) => {
+export const reducerFunction = (state: State , action: ColorActions) => {
     switch (action.type) {
         case "UPDATE_HEX_COLOR":
             return { ...state, hexColor: action.payload };
