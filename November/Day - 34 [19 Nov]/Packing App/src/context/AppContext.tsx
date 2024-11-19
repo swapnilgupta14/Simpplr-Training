@@ -30,6 +30,23 @@ function packingReducer(state: State, action: Action): State {
                 ...state,
                 items: [...state.items, action.payload]
             };
+        case 'EDIT_ITEM_NAME':
+            return {
+                ...state,
+                items: state.items.map(item =>
+                    item.id === action.payload.id
+                        ? { ...item, name: action.payload.name }
+                        : item
+                )
+            };
+        case "UNPACK_ALL":
+            return {
+                ...state,
+                items: state.items.map(item => ({
+                    ...item,
+                    isPacked: false,
+                })),
+            };
         default:
             return state;
     }

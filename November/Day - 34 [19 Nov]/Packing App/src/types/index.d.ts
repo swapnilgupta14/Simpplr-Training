@@ -33,7 +33,9 @@ export type Action =
   | { type: "SET_CATEGORY"; payload: Category | "all" }
   | { type: "SET_UNPACKED_SEARCH_QUERY"; payload: string }
   | { type: "SET_PACKED_SEARCH_QUERY"; payload: string }
-  | { type: "ADD_ITEM"; payload: Item };
+  | { type: "ADD_ITEM"; payload: Item }
+  | { type: "EDIT_ITEM_NAME"; payload: { id: string; name: string } }
+  | { type: "UNPACK_ALL"};
 
 export type GroupedItems = {
   [K in Category]: Item[];

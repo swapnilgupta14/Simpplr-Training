@@ -17,14 +17,14 @@ export default function UnpackedItems() {
     const topSuggestions = state.items.filter((item) => !item.isPacked && item.category === state.selectedCategory);
     //const topSuggestions = filteredItems.filter((item) => state.selectedCategory !== 'all' && item.category === state.selectedCategory);
 
-    const allItems = state.items.filter((item) => !item.isPacked)
+    const allItems: Item[] = state.items.filter((item) => !item.isPacked)
+    
     const searchResults = filterBySearch(allItems);
 
     return (
         <div className="w-1/2 p-4 px-6 bg-gray-100 rounded min-h-[83vh]">
-            <div className='flex justify-between items-baseline'>
-
-                <h2 className="text-xl font-bold mb-4">Unpacked Items</h2>
+            <div className='flex justify-between items-center rounded-xl bg-zinc-200 py-2 px-4 mb-4'>
+                <h2 className="text-xl font-medium">Unpacked Items ({allItems.length})</h2>
                 <div>
                     <SearchInput isPacked={false} />
                 </div>

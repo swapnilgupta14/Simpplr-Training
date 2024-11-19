@@ -10,7 +10,7 @@ export default function App() {
     return (
         <PackingProvider>
             <div className="container mx-auto p-4 select-none">
-                <h1 className="text-lg font-medium my-2 text-black">Packing Application using React + ContextAPI</h1>
+                {/* <h1 className="text-lg font-medium my-2 text-black">Packing Application using React + ContextAPI</h1> */}
                 <div className='w-full flex justify-between items-baseline'>
                     <CategoryFilter />
                     <button
