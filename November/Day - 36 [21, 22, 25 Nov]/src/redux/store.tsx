@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import authReducer from './authSlice';
-import todoReducer from './todoSlice';
+import taskReducer from './taskSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    todos: todoReducer
+    tasks: taskReducer,
   },
-  middleware: (getDefaultMiddleware) => 
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false
-    })
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

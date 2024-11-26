@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import {User, AuthState} from "../types"
+import { User, AuthState } from "../types";
 
 const initialState: AuthState = {
   user: null,
@@ -16,25 +15,35 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.isAuthenticated = true;
       state.token = action.payload.token;
-      localStorage.setItem('user', JSON.stringify(action.payload.user));
+      localStorage.setItem('userCurrent', JSON.stringify(action.payload.user));
       localStorage.setItem('token', action.payload.token);
+      console.log(state, "steate")
     },
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
       state.token = null;
-      localStorage.removeItem('user');
+      localStorage.removeItem('userCurrent');
       localStorage.removeItem('token');
     },
-
     restoreSession: (state) => {
-      const storedUser = localStorage.getItem('user');
+      const storedUser = localStorage.getItem('userCurrent');
       const storedToken = localStorage.getItem('token');
-      
+
       if (storedUser && storedToken) {
-        state.user = JSON.parse(storedUser);
-        state.isAuthenticated = true;
-        state.token = storedToken;
+        const user = JSON.parse(storedUser);
+
+        if (user.token === storedToken) {
+          state.user = user;
+          state.isAuthenticated = true;
+          state.token = storedToken;
+        } else {
+          state.user = null;
+          state.isAuthenticated = false;
+          state.token = null;
+          localStorage.removeItem('userCurrent');
+          localStorage.removeItem('token');
+        }
       }
     }
   }

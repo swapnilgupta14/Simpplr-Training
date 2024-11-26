@@ -10,7 +10,7 @@ import { store } from './redux/store';
 import { restoreSession } from './redux/authSlice';
 
 import Dashboard from './pages/Dashboard';
-import { Login, Unauthorized } from './component/Auth';
+import Auth from './component/Auth';
 import ProtectedRoute from './component/ProtectedRoute';
 
 const App: React.FC = () => {
@@ -22,9 +22,8 @@ const App: React.FC = () => {
         <Provider store={store}>
             <Router>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/unauthorized" element={<Unauthorized />} />
-                    <Route element={<ProtectedRoute allowedRoles={['admin', 'user']} />}>
+                    <Route path="/login" element={<Auth />} />
+                    <Route element={<ProtectedRoute allowedRoles={["Admin", "Team Manager", "Team Member"]} />}>
                         <Route path="/dashboard" element={<Dashboard />} />
                     </Route>
                     <Route path="/" element={<Navigate to="/dashboard" replace />} />
