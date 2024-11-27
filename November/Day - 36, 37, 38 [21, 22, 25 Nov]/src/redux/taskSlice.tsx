@@ -1,32 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Task, User } from "../types";
-
-interface TaskState {
-    tasks: Task[];
-    user: User;
-    statistics: {
-        totalTasks: number;
-        completedTasks: number;
-        pendingTasks: number;
-        highPriorityTasks: number;
-        tasksPerTeam: Record<number, number>;
-        tasksByCategory: { [key: string]: number };
-        averageCompletionTime: number;
-        overdueTasksCount: number;
-    };
-}
-
-interface AdminTaskUpdatePayload {
-    id: number;
-    updates: Partial<Task>;
-}
-
-interface TaskAnalytics {
-    startDate: string;
-    endDate: string;
-    teamId?: number;
-}
-
+import { AddTaskPayload, BulkUpdatePayload, UpdateTaskPayload, AdminTaskUpdatePayload, TaskState } from "../types";
 
 const initialState: TaskState = {
     tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
@@ -42,32 +16,6 @@ const initialState: TaskState = {
         overdueTasksCount: 0,
     }
 };
-
-
-interface AddTaskPayload {
-    title: string;
-    description?: string;
-    priority: 'high' | 'medium' | 'low';
-    category?: string;
-    dueDate?: string;
-    assignedTo?: number;
-    teamId?: number;
-}
-
-interface UpdateTaskPayload {
-    id: number;
-    title?: string;
-    description?: string;
-    priority?: 'high' | 'medium' | 'low';
-    category?: string;
-    dueDate?: string;
-    status?: 'pending' | 'completed';
-}
-
-interface BulkUpdatePayload {
-    ids: number[];
-    updates: Partial<Omit<Task, 'id' | 'teamId' | 'createdAt'>>;
-}
 
 const taskSlice = createSlice({
     name: 'tasks',
@@ -98,9 +46,9 @@ const taskSlice = createSlice({
             console.log(action, "action in a admin");
             console.log(state, "state in admin");
 
-            if (action.payload.assignedTo && state.user.role !== 'Admin' && state.user.role !== 'Team Manager') {
-                throw new Error('Unauthorized: Only Admins or Managers can assign tasks.');
-            }
+            // if (action.payload.assignedTo && state.user.role !== 'Admin' && state.user.role !== 'Team Manager') {
+            //     throw new Error('Unauthorized: Only Admins or Managers can assign tasks.');
+            // }
 
             state.tasks.push(newTask);
             localStorage.setItem('tasks', JSON.stringify(state.tasks));
@@ -129,7 +77,7 @@ const taskSlice = createSlice({
         deleteTask: (state, action: PayloadAction<number>) => {
             const task = state.tasks.find(task => task.taskId === action.payload);
             if (task) {
-                const isPersonalTask = task.createdBy === state.user.id;
+                const isPersonalTask = task.createdBy === state.user.id || state?.user?.role;
 
                 if (
                     state.user.role === 'Admin' ||
@@ -147,8 +95,10 @@ const taskSlice = createSlice({
         toggleTaskStatus: (state, action: PayloadAction<number>) => {
             const task = state.tasks.find(task => task.taskId === action.payload);
             if (task) {
-                const isAssignedTask = task.assignedTo === state.user.id;
-                console.log(task.assignedTo, state.user.id);
+                const isAssignedTask = task.assignedTo === state.user.id || task.createdBy === state.user.id || state.user.role === "Team Manager";
+
+                console.log(isAssignedTask, task.assignedTo, task.createdBy, task.taskId, state.user.id, "wsjbxa");
+                console.log(task, "task");
 
                 if (isAssignedTask) {
                     task.status = task.status === 'pending' ? 'completed' : 'pending';
@@ -304,7 +254,7 @@ function calculateAverageCompletionTime(tasks: Task[]): number {
 
     const totalTime = completedTasks.reduce((sum, task) => {
         const createdAt = new Date(task.createdAt).getTime();
-        const completedAt = new Date(task.completedAt!).getTime(); 
+        const completedAt = new Date(task.completedAt!).getTime();
         return sum + (completedAt - createdAt);
     }, 0);
 

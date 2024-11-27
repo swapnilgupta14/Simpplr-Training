@@ -1,34 +1,33 @@
-import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { PackingProvider } from './context/AppContext';
-import CategoryFilter from './components/CategoryFilter';
-import UnpackedItems from './components/Unpacked';
-import PackedItems from './components/Packed';
-import AddNewPopup from './components/AddNewPopup';
+import Sidebar from './Sidebar';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
     return (
-        <PackingProvider>
-            <div className="container mx-auto p-4 select-none">
-                {/* <h1 className="text-lg font-medium my-2 text-black">Packing Application using React + ContextAPI</h1> */}
-                <div className='w-full flex justify-between items-baseline'>
-                    <CategoryFilter />
-                    <button
-                        className='rounded-3xl bg-black text-white py-2 px-4 mx-4 hover:bg-white hover:border-black border-2 hover:text-black'
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        Add New Item
-                    </button>
+        <>
+            <PackingProvider>
+                <div className="flex h-screen">
+                    <Sidebar />
+                    <div className="flex-1 overflow-y-auto">
+                        <Outlet />
+                    </div>
                 </div>
-                <div className="flex gap-4">
-                    <UnpackedItems />
-                    <PackedItems />
-                </div>
-                <AddNewPopup
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                />
-            </div>
-        </PackingProvider>
+            </PackingProvider>
+            <ToastContainer
+                position="bottom-right"
+                hideProgressBar={true}
+                closeOnClick
+                pauseOnHover
+                draggable
+                autoClose={1500}
+                limit={3}
+                toastStyle={{
+                    borderRadius: "40px",
+                    padding: "15px",
+                    border: "green solid 1px",
+                }}
+            />
+        </>
     );
 }

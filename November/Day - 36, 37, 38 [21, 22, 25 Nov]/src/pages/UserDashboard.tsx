@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Calendar, Search, Grid, List, Plus, Clock, Tag, Flag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ClipboardList, LogOut } from "lucide-react"
 import ProfilePopup from '../component/ProfilePopup';
@@ -6,24 +6,32 @@ import ProfilePopup from '../component/ProfilePopup';
 import { useAppSelector, useAppDispatch } from '../redux/store';
 import {
     addTask,
-    // editTask,
     deleteTask,
     toggleTaskStatus,
-    // bulkUpdateTasks,
-    // deleteCompletedTasks,
 } from '../redux/taskSlice';
 import { Task, User } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 type selectedMember = User | null;
 
-
 const UserDashboard = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector(state => state.auth);
     const { tasks } = useAppSelector(state => state.tasks);
-    const [currentUserTasks, setCurrentUserTasks] = useState<Task[]>([]);
+
+    const currentUser = useMemo(() => {
+        const storedUser = localStorage.getItem("userCurrent");
+        return storedUser ? JSON.parse(storedUser) : null;
+    }, []);
+
+    const teamMembers = useMemo(() => {
+        const users = localStorage.getItem('SignedUpUsers');
+        return users
+            ? JSON.parse(users).filter((item: User) => item.role === 'Team Member')
+            : [];
+    }, []);
+
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'calendar'>('list');
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [selectedPriority, setSelectedPriority] = useState<'high' | 'medium' | 'low' | 'all'>('all');
@@ -37,37 +45,37 @@ const UserDashboard = () => {
     const [showSearchResults, setShowSearchResults] = useState(false);
     const [selectedMember, setSelectedMember] = useState<selectedMember>(null);
 
-    const [teamMembers, setTeamMembers] = useState(() => {
-        const users = localStorage.getItem('SignedUpUsers');
-        if (users) {
-            const parsed = JSON.parse(users);
-            console.log(parsed)
-            const team_members = parsed.filter((item: User) => item.role === 'Team Member');
-            return team_members;
+    const filteredTasks = useMemo(() => {
+        if (!currentUser) return [];
+        let tasksToFilter = [];
+        if (currentUser.role === 'Team Member') {
+            tasksToFilter = tasks.filter((item) => item.assignedTo == currentUser.id);
+        } else if (currentUser.role === 'Team Manager') {
+            tasksToFilter = tasks;
+        } else {
+            tasksToFilter = tasks;
         }
-    });
 
-    const filterTasks = () => {
-        const currentUser = localStorage.getItem("userCurrent");
-        if (currentUser) {
-            const parsed = JSON.parse(currentUser);
-            const { id, role } = parsed;
-            if (id && role === "Team Member") {
-                const filteredTasksById = tasks.filter((item) => item.assignedTo == id);
-                setCurrentUserTasks(filteredTasksById);
-            } else if (role === "Team Manager") {
-                const filteredTasksById = tasks.filter((item) => item.createdBy == id);
-                setCurrentUserTasks(filteredTasksById);
-            } else {
-                setCurrentUserTasks(tasks);
-            }
-        }
-    }
+        return tasksToFilter.filter(task => {
+            const matchesSearch =
+                task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                task.description?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    useEffect(() => {
-        filterTasks();
-    }, [tasks])
+            const matchesPriority =
+                selectedPriority === 'all' || task.priority === selectedPriority;
 
+            const matchesCategory =
+                selectedCategory === 'all' || task.category === selectedCategory;
+
+            return matchesSearch && matchesPriority && matchesCategory;
+        });
+    }, [
+        tasks,
+        currentUser,
+        searchQuery,
+        selectedPriority,
+        selectedCategory
+    ]);
 
     const [newTask, setNewTask] = useState({
         title: '',
@@ -85,12 +93,17 @@ const UserDashboard = () => {
         { value: 'high', color: 'bg-red-100 text-red-800', label: 'High' }
     ];
 
-    const filteredTasks = currentUserTasks.filter(task => {
-        const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) || task.description?.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesPriority = selectedPriority === 'all' || task.priority === selectedPriority;
-        const matchesCategory = selectedCategory === 'all' || task.category === selectedCategory;
-        return matchesSearch && matchesPriority && matchesCategory;
-    });
+    const stats = useMemo(() => ({
+        total: filteredTasks.length,
+        completed: filteredTasks.filter(task => task.status === 'completed').length,
+        highPriority: filteredTasks.filter(task => task.priority === 'high').length,
+        dueSoon: filteredTasks.filter(task => {
+            if (!task.dueDate) return false;
+            const dueDate = new Date(task.dueDate);
+            const today = new Date();
+            return Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) <= 3;
+        }).length
+    }), [filteredTasks]);
 
     const getDaysInMonth = (date: Date) => {
         return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -135,34 +148,19 @@ const UserDashboard = () => {
         setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
     };
 
-    const stats = {
-        total: filteredTasks.length,
-        completed: filteredTasks.filter(task => task.status === 'completed').length,
-        highPriority: filteredTasks.filter(task => task.priority === 'high').length,
-        dueSoon: filteredTasks.filter(task => {
-            if (!task.dueDate) return false;
-            const dueDate = new Date(task.dueDate);
-            const today = new Date();
-            return Math.ceil((dueDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)) <= 3;
-        }).length
-    };
-
     const handleAddTask = () => {
         try {
-            const currentUser = localStorage.getItem('userCurrent');
-            let new_task: Task;
             if (currentUser) {
-                const parsed = JSON.parse(currentUser);
-                new_task = {
+                const new_task: Task = {
                     ...newTask,
                     taskId: Date.now(),
                     status: 'pending',
                     createdAt: new Date().toISOString(),
-                    createdBy: parsed.id,
-                    assignedTo: taskType === 'team' ? selectedMember?.id : parsed.id
+                    createdBy: currentUser.id,
+                    assignedTo: taskType === 'team' ? selectedMember?.id : currentUser.id
                 };
                 dispatch(addTask(new_task));
-                // filterTasks();
+
                 setNewTask({
                     title: '',
                     description: '',
@@ -172,83 +170,32 @@ const UserDashboard = () => {
                 });
                 setShowAddTask(false);
             }
-
         } catch (err) {
-            if (err instanceof Error) {
-                alert(err.message);
-            } else {
-                alert('An unexpected error occurred');
-            }
+            alert(err instanceof Error ? err.message : 'An unexpected error occurred');
         }
     };
 
     const handleToggleStatus = (taskId: number) => {
         try {
             dispatch(toggleTaskStatus(taskId));
-            // filterTasks();
         } catch (err) {
-            if (err instanceof Error) {
-                alert(err.message);
-            } else {
-                alert('An unexpected error occurred');
-            }
+            alert(err instanceof Error ? err.message : 'An unexpected error occurred');
         }
     };
 
     const handleDeleteTask = (taskId: number) => {
         try {
             dispatch(deleteTask(taskId));
-            // filterTasks();
         } catch (err) {
-            if (err instanceof Error) {
-                alert(err.message);
-            } else {
-                alert('An unexpected error occurred');
-            }
+            alert(err instanceof Error ? err.message : 'An unexpected error occurred');
         }
     };
 
-    const handleFilterTaskByCategory = (): void => {
-        const currentUser = localStorage.getItem("userCurrent");
-        let filteredTasksById: Task[] = [];
-        if (currentUser) {
-            // console.log(id, )
-            const { id } = JSON.parse(currentUser);
-            // console.log(id, typeof id)
-            filteredTasksById = tasks.filter((item) => item.createdBy == id);
-        }
-        if (selectedCategory !== "all") {
-            const newTasks: Task[] = filteredTasksById.filter((item) => item.category === selectedCategory);
-            setCurrentUserTasks(newTasks);
-        } else {
-            setCurrentUserTasks(filteredTasksById);
-        }
-    }
-
-    const handleFilterTaskByPriority = (): void => {
-        const currentUser = localStorage.getItem("userCurrent");
-        let filteredTasksByPriority: Task[] = [];
-        if (currentUser) {
-            const { id } = JSON.parse(currentUser);
-            // console.log(id, typeof id)
-            filteredTasksByPriority = tasks.filter((item) => item.createdBy == id);
-        }
-        if (selectedPriority !== 'all') {
-            const newTasks: Task[] = filteredTasksByPriority.filter((item) => item.priority === selectedPriority);
-            // console.log(newTasks, "priotiyty", selectedCategory);
-            setCurrentUserTasks(newTasks);
-        } else {
-            setCurrentUserTasks(filteredTasksByPriority);
-        }
-    }
-
-    useEffect(() => {
-        handleFilterTaskByPriority();
-    }, [selectedPriority])
-
-    useEffect(() => {
-        handleFilterTaskByCategory();
-    }, [selectedCategory])
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userCurrent");
+        navigate('/login');
+    };
 
     const renderCalendarView = () => {
         const monthData = getMonthData();
@@ -305,12 +252,6 @@ const UserDashboard = () => {
                 </div>
             </div>
         );
-    };
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userCurrent");
-        navigate('/login');
     };
 
     return (
@@ -472,7 +413,8 @@ const UserDashboard = () => {
                         renderCalendarView()
                     ) : (
                         <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-6`}>
-                            {currentUserTasks.map(task => (
+                            {/* {JSON.stringify(currentUserTasks)} */}
+                            {filteredTasks.map(task => (
                                 <div
                                     key={task.taskId}
                                     className="bg-gray-50 border-gray-200 rounded-xl shadow-sm border  p-6 hover:shadow-md transition-shadow"

@@ -26,7 +26,7 @@ const App: React.FC = () => {
                     <Route element={<ProtectedRoute allowedRoles={["Admin", "Team Manager", "Team Member"]} />}>
                         <Route path="/dashboard" element={<Dashboard />} />
                     </Route>
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/" element={<Navigate to="/login" replace />} />
                 </Routes>
             </Router>
         </Provider>

@@ -182,7 +182,7 @@ const Auth: React.FC = () => {
                             id="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             required
                         />
                     </div>
@@ -195,7 +195,7 @@ const Auth: React.FC = () => {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             required
                             minLength={6}
                         />
@@ -210,7 +210,7 @@ const Auth: React.FC = () => {
                                 id="role"
                                 value={role}
                                 onChange={(e) => setRole(e.target.value as 'Team Manager' | 'Team Member')}
-                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             >
                                 <option value="Team Member">Team Member</option>
                                 <option value="Team Manager">Team Manager</option>
@@ -220,7 +220,7 @@ const Auth: React.FC = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+                        className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-700 transition duration-300"
                     >
                         {isSignup ? 'Signup' : 'Login'}
                     </button>
@@ -231,7 +231,7 @@ const Auth: React.FC = () => {
                         <>
                             Already have an account?{' '}
                             <button
-                                className="text-blue-500 underline"
+                                className="text-black underline"
                                 onClick={() => setIsSignup(false)}
                             >
                                 Login
@@ -241,7 +241,7 @@ const Auth: React.FC = () => {
                         <>
                             Don't have an account?{' '}
                             <button
-                                className="text-blue-500 underline"
+                                className="text-black underline"
                                 onClick={() => setIsSignup(true)}
                             >
                                 Signup
