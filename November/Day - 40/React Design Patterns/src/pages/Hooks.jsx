@@ -1,5 +1,5 @@
-import React from 'react';
-import { useCounter } from '../utils/useCounter';
+import React from "react";
+import { useCounter } from "../utils/useCounter";
 
 const Hooks = () => {
   const { count, increment, decrement, reset } = useCounter(0);
@@ -7,7 +7,9 @@ const Hooks = () => {
   return (
     <div className="p-6">
       <h2 className="text-xl mb-4">Hooks Design Pattern Demo</h2>
-      <p className="text-lg mb-4">Current Count: <strong>{count}</strong></p>
+      <p className="text-lg mb-4">
+        Current Count: <strong>{count}</strong>
+      </p>
       <div className="flex space-x-2">
         <button
           onClick={increment}

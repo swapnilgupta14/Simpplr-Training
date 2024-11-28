@@ -1,16 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const DataProvider = ({ render }) => {
+const DataProvider = ({ renderProp }) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
-      setData({ message: "Hello This is the Comp to show the Render Props Design Pattern" });
+      setData({
+        message:
+          "Hello This is the Comp to show the Render Props Design Pattern",
+      });
     }, 2000);
   }, []);
 
-  return <>{render(data)}</>;
+  return <>{renderProp(data)}</>;
 };
 
 const Render = () => {
@@ -18,7 +21,7 @@ const Render = () => {
     <div className="p-6">
       <h2 className="text-xl mb-4">Render Props Pattern Demo</h2>
       <DataProvider
-        render={(data) =>
+        renderProp={(data) =>
           data ? (
             <p className="text-lg text-green-800">{data.message}</p>
           ) : (
