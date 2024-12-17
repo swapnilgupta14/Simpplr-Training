@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "AAA",
+        "email": "AAA@gmail.com",
+        "age": 35,
+        "occupation": "Software Engineer",
+        "city": "Bangalore"
+    },
+    {
+        "id": 2,
+        "name": "BBB",
+        "email": "BBB@gmail.com",
+        "age": 28,
+        "occupation": "Product Manager",
+        "city": "Pune"
+    }
+]
