@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "Updated Partially",
+    "name": "Updated___111",
     "email": "Updated@gmail.com",
-    "age": 30,
+    "age": 25,
     "occupation": "SWE",
     "city": "Kanpur"
   },
@@ -24,10 +24,18 @@
     "city": "Kanpur"
   },
   {
-    "id": 4,
-    "name": "Swapnil",
-    "email": "Swapnil@gmail.com",
-    "age": 22,
+    "id": 5,
+    "name": "New User",
+    "email": "newuser@gmail.com",
+    "age": 2,
+    "occupation": "Intern",
+    "city": "Kanpur"
+  },
+  {
+    "id": 6,
+    "name": "New User",
+    "email": "newuser@gmail.com",
+    "age": 2,
     "occupation": "Intern",
     "city": "Kanpur"
   }
