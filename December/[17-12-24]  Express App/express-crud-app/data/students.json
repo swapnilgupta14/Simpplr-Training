@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "full_name": "BBB",
+    "email": "BBB@gmail.com",
+    "age": 28,
+    "major": "Product Management",
+    "campus": "Pune",
+    "college_degree": "MBA",
+    "branch": "Marketing",
+    "rollno": "MBA2028002",
+    "year": "2nd Year"
+  },
+  {
+    "id": 2,
+    "full_name": "Swapnil",
+    "email": "Swapnil@gmail.com",
+    "age": 22,
+    "major": "Internship Studies",
+    "campus": "Kanpur",
+    "college_degree": "B.Tech",
+    "branch": "Mechanical Engineering",
+    "rollno": "ME2022003",
+    "year": "3rd Year"
+  },
+  {
+    "id": 3,
+    "full_name": "New User",
+    "email": "newuser@gmail.com",
+    "age": 2,
+    "major": "Internship Studies",
+    "campus": "Kanpur",
+    "college_degree": "B.Tech",
+    "branch": "Civil Engineering",
+    "rollno": "CE2002005",
+    "year": "1st Year"
+  },
+  {
+    "id": 4,
+    "full_name": "new Student",
+    "email": "mail.swapnilgupta@gmail.com",
+    "age": "20",
+    "major": "CSE",
+    "campus": "PSIT",
+    "college_degree": "",
+    "branch": "",
+    "year": ""
+  }
+]
