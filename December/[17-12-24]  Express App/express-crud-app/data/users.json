@@ -38,5 +38,13 @@
     "age": 2,
     "occupation": "Intern",
     "city": "Kanpur"
+  },
+  {
+    "id": 7,
+    "name": "Swapnil Gupta",
+    "email": "mail.swapnilgupta@gmail.com",
+    "age": 22,
+    "occupation": "Student",
+    "city": "Delhi"
   }
 ]
