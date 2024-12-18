@@ -26,7 +26,7 @@ async function writeUsers(users) {
   await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2));
 }
 
-app.get("/allUsers", async (req, res) => {
+app.get("/api/v1/allUsers", async (req, res) => {
   try {
     const users = await readUsers();
     res.json(users);
@@ -35,7 +35,7 @@ app.get("/allUsers", async (req, res) => {
   }
 });
 
-app.get("/users/:id", async (req, res) => {
+app.get("/api/v1/users/:id", async (req, res) => {
   try {
     const users = await readUsers();
     const user = users.find((u) => u.id === parseInt(req.params.id));
@@ -50,7 +50,7 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
-app.post("/newUser", async (req, res) => {
+app.post("/api/v1/newUser", async (req, res) => {
   try {
     const users = await readUsers();
     const newUser = {
@@ -61,19 +61,18 @@ app.post("/newUser", async (req, res) => {
     users.push(newUser);
     await writeUsers(users);
 
-    res.status(201).json(newUser);
+    res.status(201).json({ message: "NewUser is Created!", data: newUser });
   } catch (error) {
     res.status(500).json({ error: "Failed to create user" });
   }
 });
 
-app.put("/users/:id", async (req, res) => {
+app.put("/api/v1/users/:id", async (req, res) => {
   try {
     const users = await readUsers();
     const index = users.findIndex((u) => u.id === parseInt(req.params.id));
 
     if (index !== -1) {
-      // Replace entire user object
       users[index] = { id: users[index].id, ...req.body };
       await writeUsers(users);
       res.json(users[index]);
@@ -85,7 +84,7 @@ app.put("/users/:id", async (req, res) => {
   }
 });
 
-app.patch("/users/:id", async (req, res) => {
+app.patch("/api/v1/users/:id", async (req, res) => {
   try {
     const users = await readUsers();
     const index = users.findIndex((u) => u.id === parseInt(req.params.id));
@@ -102,7 +101,7 @@ app.patch("/users/:id", async (req, res) => {
   }
 });
 
-app.delete("/users/:id", async (req, res) => {
+app.delete("/api/v1/users/:id", async (req, res) => {
   try {
     const users = await readUsers();
     const filteredUsers = users.filter((u) => u.id !== parseInt(req.params.id));
@@ -121,3 +120,5 @@ app.delete("/users/:id", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+
