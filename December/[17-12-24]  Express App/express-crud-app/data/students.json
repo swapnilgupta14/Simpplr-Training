@@ -45,5 +45,16 @@
     "college_degree": "",
     "branch": "",
     "year": ""
+  },
+  {
+    "id": 5,
+    "full_name": "Swapnil Gupta",
+    "email": "mail.swapnilgupta@gmail.com",
+    "age": "20",
+    "major": "Computer Science ",
+    "campus": "PSIT",
+    "college_degree": "",
+    "branch": "",
+    "year": ""
   }
 ]
