@@ -77,11 +77,20 @@ export const Checked: Story = {
     },
 };
 
-export const Disabled: Story = {
-    render: (args) => <ToggleSwitchWrapper {...args} disabled={true} />,
+// export const Disabled: Story = {
+//     render: (args) => <ToggleSwitchWrapper {...args} disabled={true} />,
+//     args: {
+//         checked: false,
+//         onLabel: 'On',
+//         offLabel: 'Off',
+//     },
+// };
+
+export const CustomLabels: Story = {
     args: {
-        checked: false,
-        onLabel: 'On',
-        offLabel: 'Off',
+      ...Default.args,
+      onLabel: 'Active',
+      offLabel: 'Inactive',
     },
-};
+  };
+  

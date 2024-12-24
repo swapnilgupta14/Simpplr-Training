@@ -34,7 +34,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         width: '60px',
         height: '30px',
         borderRadius: '15px',
-        backgroundColor: disabled ? '#d1d5db' : checked ? '#38b2ac' : '#e5e7eb',
+        backgroundColor: disabled ? '#e5e7eb' : checked ? 'blue' : 'gray',
         cursor: disabled ? 'not-allowed' : 'pointer',
         border: 'none',
         padding: 0,
@@ -47,8 +47,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         width: '24px',
         height: '24px',
         borderRadius: '50%',
-        backgroundColor: '#fff',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+        backgroundColor: 'white',
     };
 
     const labelStyles: CSSProperties = {
