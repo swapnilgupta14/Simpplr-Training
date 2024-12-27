@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "full_name": "dw",
+    "email": "swapnilsggupta@gmail.com",
+    "age": "20",
+    "major": "sa",
+    "campus": "dewqa",
+    "college_degree": "",
+    "branch": "",
+    "year": ""
+  },
+  {
+    "id": 2,
+    "full_name": "New User Edited",
+    "email": "mail.swapnilgupta@gmail.com",
+    "age": "30",
+    "major": "Computer Science ",
+    "campus": "dewqa",
+    "college_degree": "",
+    "branch": "",
+    "year": ""
+  },
+  {
+    "id": 3,
+    "full_name": "cdwe",
+    "email": "swapnilsggupta@gmail.com",
+    "age": "16",
+    "major": "fwe",
+    "campus": "fwef",
+    "college_degree": "",
+    "branch": "",
+    "year": ""
+  }
+]
